@@ -1,0 +1,46 @@
+.input {
+    border: 1px solid var(--input-border-color);
+    background: var(--input-background);
+    color: var(--input-color);
+    border-radius: var(--input-border-radius);
+    transition: background ease 300ms;
+}
+
+.input:focus {
+    transition: border-color 200ms linear, var(--input-active-shadow-transition);
+    box-shadow: var(--input-active-shadow);
+    z-index: 10;
+}
+
+.input-l {
+    height: 38px;
+    padding: 8px 12px;
+}
+
+.input-m {
+    height: 34px;
+    padding: 6px 12px;
+}
+
+.input-s {
+    height: 28px;
+    padding: 3px 8px;
+}
+
+.input-fullWidth {
+    width: 100%;
+}
+
+.input-invalid {
+    color: var(--danger-color);
+    border-color: var(--danger-color);
+}
+
+input[type=number]::-webkit-inner-spin-button {
+    margin-left: 4px;
+    margin-right: -10px;
+}
+
+.input:disabled {
+    background: var(--border-color);
+}

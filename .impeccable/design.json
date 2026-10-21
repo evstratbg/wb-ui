@@ -1,0 +1,576 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-21T08:00:47+00:00",
+  "title": "Design System: Wiren Board UI concept",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Controller Green",
+        "tonalRamp": [
+          "oklch(15% 0.1404 134.4)",
+          "oklch(27% 0.1404 134.4)",
+          "oklch(38% 0.1404 134.4)",
+          "oklch(50% 0.1404 134.4)",
+          "oklch(61% 0.1404 134.4)",
+          "oklch(73% 0.1404 134.4)",
+          "oklch(84% 0.1404 134.4)",
+          "oklch(95% 0.1404 134.4)"
+        ]
+      },
+      "primary-hover": {
+        "role": "primary",
+        "displayName": "Controller Green Hover",
+        "tonalRamp": [
+          "oklch(15% 0.1257 134.9)",
+          "oklch(27% 0.1257 134.9)",
+          "oklch(38% 0.1257 134.9)",
+          "oklch(50% 0.1257 134.9)",
+          "oklch(61% 0.1257 134.9)",
+          "oklch(73% 0.1257 134.9)",
+          "oklch(84% 0.1257 134.9)",
+          "oklch(95% 0.1257 134.9)"
+        ]
+      },
+      "link": {
+        "role": "primary",
+        "displayName": "Link Green",
+        "tonalRamp": [
+          "oklch(15% 0.1375 135.1)",
+          "oklch(27% 0.1375 135.1)",
+          "oklch(38% 0.1375 135.1)",
+          "oklch(50% 0.1375 135.1)",
+          "oklch(61% 0.1375 135.1)",
+          "oklch(73% 0.1375 135.1)",
+          "oklch(84% 0.1375 135.1)",
+          "oklch(95% 0.1375 135.1)"
+        ]
+      },
+      "brand": {
+        "role": "primary",
+        "displayName": "WB Brand Green",
+        "tonalRamp": [
+          "oklch(15% 0.2007 135.2)",
+          "oklch(27% 0.2007 135.2)",
+          "oklch(38% 0.2007 135.2)",
+          "oklch(50% 0.2007 135.2)",
+          "oklch(61% 0.2007 135.2)",
+          "oklch(73% 0.2007 135.2)",
+          "oklch(84% 0.2007 135.2)",
+          "oklch(95% 0.2007 135.2)"
+        ]
+      },
+      "canvas": {
+        "role": "neutral",
+        "displayName": "Pale Workspace",
+        "tonalRamp": [
+          "oklch(15% 0.0045 134.8)",
+          "oklch(27% 0.0045 134.8)",
+          "oklch(38% 0.0045 134.8)",
+          "oklch(50% 0.0045 134.8)",
+          "oklch(61% 0.0045 134.8)",
+          "oklch(73% 0.0045 134.8)",
+          "oklch(84% 0.0045 134.8)",
+          "oklch(95% 0.0045 134.8)"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "White Surface",
+        "tonalRamp": [
+          "oklch(15% 0.0000 0.0)",
+          "oklch(27% 0.0000 0.0)",
+          "oklch(38% 0.0000 0.0)",
+          "oklch(50% 0.0000 0.0)",
+          "oklch(61% 0.0000 0.0)",
+          "oklch(73% 0.0000 0.0)",
+          "oklch(84% 0.0000 0.0)",
+          "oklch(95% 0.0000 0.0)"
+        ]
+      },
+      "surface-tinted": {
+        "role": "neutral",
+        "displayName": "Tinted Surface",
+        "tonalRamp": [
+          "oklch(15% 0.0102 131.4)",
+          "oklch(27% 0.0102 131.4)",
+          "oklch(38% 0.0102 131.4)",
+          "oklch(50% 0.0102 131.4)",
+          "oklch(61% 0.0102 131.4)",
+          "oklch(73% 0.0102 131.4)",
+          "oklch(84% 0.0102 131.4)",
+          "oklch(95% 0.0102 131.4)"
+        ]
+      },
+      "surface-hover": {
+        "role": "neutral",
+        "displayName": "Hover Wash",
+        "tonalRamp": [
+          "oklch(15% 0.0057 128.5)",
+          "oklch(27% 0.0057 128.5)",
+          "oklch(38% 0.0057 128.5)",
+          "oklch(50% 0.0057 128.5)",
+          "oklch(61% 0.0057 128.5)",
+          "oklch(73% 0.0057 128.5)",
+          "oklch(84% 0.0057 128.5)",
+          "oklch(95% 0.0057 128.5)"
+        ]
+      },
+      "row-hover": {
+        "role": "neutral",
+        "displayName": "Row Hover Wash",
+        "tonalRamp": [
+          "oklch(15% 0.0097 125.7)",
+          "oklch(27% 0.0097 125.7)",
+          "oklch(38% 0.0097 125.7)",
+          "oklch(50% 0.0097 125.7)",
+          "oklch(61% 0.0097 125.7)",
+          "oklch(73% 0.0097 125.7)",
+          "oklch(84% 0.0097 125.7)",
+          "oklch(95% 0.0097 125.7)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Controller Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0206 159.2)",
+          "oklch(27% 0.0206 159.2)",
+          "oklch(38% 0.0206 159.2)",
+          "oklch(50% 0.0206 159.2)",
+          "oklch(61% 0.0206 159.2)",
+          "oklch(73% 0.0206 159.2)",
+          "oklch(84% 0.0206 159.2)",
+          "oklch(95% 0.0206 159.2)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0189 156.5)",
+          "oklch(27% 0.0189 156.5)",
+          "oklch(38% 0.0189 156.5)",
+          "oklch(50% 0.0189 156.5)",
+          "oklch(61% 0.0189 156.5)",
+          "oklch(73% 0.0189 156.5)",
+          "oklch(84% 0.0189 156.5)",
+          "oklch(95% 0.0189 156.5)"
+        ]
+      },
+      "border": {
+        "role": "neutral",
+        "displayName": "Soft Divider",
+        "tonalRamp": [
+          "oklch(15% 0.0113 141.3)",
+          "oklch(27% 0.0113 141.3)",
+          "oklch(38% 0.0113 141.3)",
+          "oklch(50% 0.0113 141.3)",
+          "oklch(61% 0.0113 141.3)",
+          "oklch(73% 0.0113 141.3)",
+          "oklch(84% 0.0113 141.3)",
+          "oklch(95% 0.0113 141.3)"
+        ]
+      },
+      "input-border": {
+        "role": "neutral",
+        "displayName": "Field Border",
+        "tonalRamp": [
+          "oklch(15% 0.0240 133.5)",
+          "oklch(27% 0.0240 133.5)",
+          "oklch(38% 0.0240 133.5)",
+          "oklch(50% 0.0240 133.5)",
+          "oklch(61% 0.0240 133.5)",
+          "oklch(73% 0.0240 133.5)",
+          "oklch(84% 0.0240 133.5)",
+          "oklch(95% 0.0240 133.5)"
+        ]
+      },
+      "navigation": {
+        "role": "neutral",
+        "displayName": "Dark Navigation",
+        "tonalRamp": [
+          "oklch(15% 0.0136 154.3)",
+          "oklch(27% 0.0136 154.3)",
+          "oklch(38% 0.0136 154.3)",
+          "oklch(50% 0.0136 154.3)",
+          "oklch(61% 0.0136 154.3)",
+          "oklch(73% 0.0136 154.3)",
+          "oklch(84% 0.0136 154.3)",
+          "oklch(95% 0.0136 154.3)"
+        ]
+      },
+      "navigation-active": {
+        "role": "neutral",
+        "displayName": "Selected Navigation",
+        "tonalRamp": [
+          "oklch(15% 0.0547 135.6)",
+          "oklch(27% 0.0547 135.6)",
+          "oklch(38% 0.0547 135.6)",
+          "oklch(50% 0.0547 135.6)",
+          "oklch(61% 0.0547 135.6)",
+          "oklch(73% 0.0547 135.6)",
+          "oklch(84% 0.0547 135.6)",
+          "oklch(95% 0.0547 135.6)"
+        ]
+      },
+      "navigation-hover": {
+        "role": "neutral",
+        "displayName": "Navigation Hover",
+        "tonalRamp": [
+          "oklch(15% 0.0302 139.4)",
+          "oklch(27% 0.0302 139.4)",
+          "oklch(38% 0.0302 139.4)",
+          "oklch(50% 0.0302 139.4)",
+          "oklch(61% 0.0302 139.4)",
+          "oklch(73% 0.0302 139.4)",
+          "oklch(84% 0.0302 139.4)",
+          "oklch(95% 0.0302 139.4)"
+        ]
+      },
+      "navigation-text": {
+        "role": "neutral",
+        "displayName": "Navigation Text",
+        "tonalRamp": [
+          "oklch(15% 0.0147 148.8)",
+          "oklch(27% 0.0147 148.8)",
+          "oklch(38% 0.0147 148.8)",
+          "oklch(50% 0.0147 148.8)",
+          "oklch(61% 0.0147 148.8)",
+          "oklch(73% 0.0147 148.8)",
+          "oklch(84% 0.0147 148.8)",
+          "oklch(95% 0.0147 148.8)"
+        ]
+      },
+      "danger": {
+        "role": "semantic",
+        "displayName": "Native Danger",
+        "tonalRamp": [
+          "oklch(15% 0.2020 21.2)",
+          "oklch(27% 0.2020 21.2)",
+          "oklch(38% 0.2020 21.2)",
+          "oklch(50% 0.2020 21.2)",
+          "oklch(61% 0.2020 21.2)",
+          "oklch(73% 0.2020 21.2)",
+          "oklch(84% 0.2020 21.2)",
+          "oklch(95% 0.2020 21.2)"
+        ]
+      },
+      "warning": {
+        "role": "semantic",
+        "displayName": "Native Warning",
+        "tonalRamp": [
+          "oklch(15% 0.1465 85.9)",
+          "oklch(27% 0.1465 85.9)",
+          "oklch(38% 0.1465 85.9)",
+          "oklch(50% 0.1465 85.9)",
+          "oklch(61% 0.1465 85.9)",
+          "oklch(73% 0.1465 85.9)",
+          "oklch(84% 0.1465 85.9)",
+          "oklch(95% 0.1465 85.9)"
+        ]
+      },
+      "chart-line": {
+        "role": "primary",
+        "displayName": "History Green",
+        "tonalRamp": [
+          "oklch(15% 0.1314 132.2)",
+          "oklch(27% 0.1314 132.2)",
+          "oklch(38% 0.1314 132.2)",
+          "oklch(50% 0.1314 132.2)",
+          "oklch(61% 0.1314 132.2)",
+          "oklch(73% 0.1314 132.2)",
+          "oklch(84% 0.1314 132.2)",
+          "oklch(95% 0.1314 132.2)"
+        ]
+      },
+      "dark-canvas": {
+        "role": "neutral",
+        "displayName": "Dark Workspace",
+        "tonalRamp": [
+          "oklch(15% 0.0118 156.1)",
+          "oklch(27% 0.0118 156.1)",
+          "oklch(38% 0.0118 156.1)",
+          "oklch(50% 0.0118 156.1)",
+          "oklch(61% 0.0118 156.1)",
+          "oklch(73% 0.0118 156.1)",
+          "oklch(84% 0.0118 156.1)",
+          "oklch(95% 0.0118 156.1)"
+        ]
+      },
+      "dark-surface": {
+        "role": "neutral",
+        "displayName": "Dark Surface",
+        "tonalRamp": [
+          "oklch(15% 0.0192 148.1)",
+          "oklch(27% 0.0192 148.1)",
+          "oklch(38% 0.0192 148.1)",
+          "oklch(50% 0.0192 148.1)",
+          "oklch(61% 0.0192 148.1)",
+          "oklch(73% 0.0192 148.1)",
+          "oklch(84% 0.0192 148.1)",
+          "oklch(95% 0.0192 148.1)"
+        ]
+      },
+      "dark-ink": {
+        "role": "neutral",
+        "displayName": "Dark Theme Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0187 137.8)",
+          "oklch(27% 0.0187 137.8)",
+          "oklch(38% 0.0187 137.8)",
+          "oklch(50% 0.0187 137.8)",
+          "oklch(61% 0.0187 137.8)",
+          "oklch(73% 0.0187 137.8)",
+          "oklch(84% 0.0187 137.8)",
+          "oklch(95% 0.0187 137.8)"
+        ]
+      },
+      "dark-muted": {
+        "role": "neutral",
+        "displayName": "Dark Theme Muted Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0310 137.4)",
+          "oklch(27% 0.0310 137.4)",
+          "oklch(38% 0.0310 137.4)",
+          "oklch(50% 0.0310 137.4)",
+          "oklch(61% 0.0310 137.4)",
+          "oklch(73% 0.0310 137.4)",
+          "oklch(84% 0.0310 137.4)",
+          "oklch(95% 0.0310 137.4)"
+        ]
+      },
+      "dark-border": {
+        "role": "neutral",
+        "displayName": "Dark Theme Divider",
+        "tonalRamp": [
+          "oklch(15% 0.0334 140.1)",
+          "oklch(27% 0.0334 140.1)",
+          "oklch(38% 0.0334 140.1)",
+          "oklch(50% 0.0334 140.1)",
+          "oklch(61% 0.0334 140.1)",
+          "oklch(73% 0.0334 140.1)",
+          "oklch(84% 0.0334 140.1)",
+          "oklch(95% 0.0334 140.1)"
+        ]
+      },
+      "dark-primary": {
+        "role": "primary",
+        "displayName": "Dark Theme Controller Green",
+        "tonalRamp": [
+          "oklch(15% 0.1432 132.4)",
+          "oklch(27% 0.1432 132.4)",
+          "oklch(38% 0.1432 132.4)",
+          "oklch(50% 0.1432 132.4)",
+          "oklch(61% 0.1432 132.4)",
+          "oklch(73% 0.1432 132.4)",
+          "oklch(84% 0.1432 132.4)",
+          "oklch(95% 0.1432 132.4)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Telemetry",
+        "purpose": "Large current readings with tabular numerals and subordinate units."
+      },
+      "headline": {
+        "displayName": "Page Headline",
+        "purpose": "Desktop page titles, reduced at existing native breakpoints."
+      },
+      "title": {
+        "displayName": "Panel Title",
+        "purpose": "Compact overview and configuration section titles."
+      },
+      "body": {
+        "displayName": "Operational Body",
+        "purpose": "Dense operational text and shared form controls."
+      },
+      "label": {
+        "displayName": "Supporting Label",
+        "purpose": "Metadata, chart axes and summaries."
+      },
+      "field-label": {
+        "displayName": "Field Label",
+        "purpose": "Labels above editable fields."
+      },
+      "mono": {
+        "displayName": "Technical Mono",
+        "purpose": "Native code/log surfaces and technical identifiers."
+      }
+    },
+    "shadows": [
+      {
+        "name": "native-card",
+        "value": "0 2px 3px #24302903",
+        "purpose": "Near-flat resting native cards."
+      },
+      {
+        "name": "selected-segment",
+        "value": "0 1px 3px #24311a15",
+        "purpose": "Selected chart-control segment."
+      },
+      {
+        "name": "menu",
+        "value": "0 8px 28px #24302914",
+        "purpose": "Floating dropdown menus."
+      },
+      {
+        "name": "schema-popover",
+        "value": "0 10px 32px #2430291a",
+        "purpose": "Native JSON editor popover."
+      },
+      {
+        "name": "dialog",
+        "value": "0 18px 70px #15210c33",
+        "purpose": "Modal dialog above its dimmed overlay."
+      },
+      {
+        "name": "field-focus",
+        "value": "0 0 0 3px color-mix(in srgb, var(--primary-color) 12%, transparent)",
+        "purpose": "Shared input focus ring."
+      }
+    ],
+    "motion": [
+      {
+        "name": "control-state",
+        "value": "140ms ease",
+        "purpose": "Shared button background/border/shadow and field border/shadow changes."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "none",
+        "purpose": "Existing prefers-reduced-motion rule removes transitions and animation."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "wide-shell",
+        "value": "1550px"
+      },
+      {
+        "name": "compact-desktop",
+        "value": "1200px"
+      },
+      {
+        "name": "overview-narrow-columns",
+        "value": "1150px"
+      },
+      {
+        "name": "hide-shell-search",
+        "value": "1050px"
+      },
+      {
+        "name": "overview-single-column",
+        "value": "980px"
+      },
+      {
+        "name": "native-headline-step",
+        "value": "900px"
+      },
+      {
+        "name": "mobile-shell",
+        "value": "768px"
+      },
+      {
+        "name": "stacked-content",
+        "value": "640px"
+      },
+      {
+        "name": "small-phone",
+        "value": "420px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "A compact primary action using the existing semantic theme.",
+      "html": "<button class=\"ds-primary\">Сохранить</button>",
+      "css": ".ds-primary{font-family:var(--font,Roboto,sans-serif);font-size:13px;font-weight:500;line-height:1.4;min-height:38px;padding:8px 14px;border-radius:7px;cursor:pointer;transition:background-color 140ms ease,border-color 140ms ease,box-shadow 140ms ease;background:var(--primary-color,#568d2d);color:var(--button-color,#fff);border:1px solid var(--primary-color,#568d2d)}.ds-primary:hover:not(:disabled){background:var(--primary-color-hover,#477825);border-color:var(--primary-color-hover,#477825)}.ds-primary:focus-visible{outline:2px solid var(--primary-color,#568d2d);outline-offset:3px;box-shadow:none;}.ds-primary:disabled{filter:opacity(.5);cursor:default}@media(prefers-reduced-motion:reduce){.ds-primary{transition:none}}"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "A secondary action with a thin field border.",
+      "html": "<button class=\"ds-secondary\">Отмена</button>",
+      "css": ".ds-secondary{font-family:var(--font,Roboto,sans-serif);font-size:13px;font-weight:500;line-height:1.4;min-height:38px;padding:8px 14px;border-radius:7px;cursor:pointer;transition:background-color 140ms ease,border-color 140ms ease,box-shadow 140ms ease;background:var(--content-background,#fff);color:var(--text-color,#243029);border:1px solid var(--input-border-color,#d8e2d2)}.ds-secondary:hover:not(:disabled){background:var(--background-accent-color-hover,#f8faf6);color:var(--primary-color-hover,#477825);border-color:var(--primary-color-hover,#477825)}.ds-secondary:focus-visible{outline:2px solid var(--primary-color,#568d2d);outline-offset:3px;box-shadow:none;}.ds-secondary:disabled{filter:opacity(.5);cursor:default}@media(prefers-reduced-motion:reduce){.ds-secondary{transition:none}}"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "The shared medium field, including focus and native error/disabled states.",
+      "html": "<label class=\"ds-field\">Название<input class=\"ds-input\" value=\"Контроллер\" /></label>",
+      "css": ".ds-field{display:grid;gap:7px;color:var(--text-color,#243029);font:500 13px/1.45 var(--font,Roboto,sans-serif)}.ds-input{height:38px;padding:8px 11px;background:var(--content-background,#fff);color:var(--text-color,#243029);border:1px solid var(--input-border-color,#d8e2d2);border-radius:7px;font:400 13px var(--font,Roboto,sans-serif);transition:border-color 140ms ease,box-shadow 140ms ease}.ds-input:focus{outline:none;border-color:var(--primary-color,#568d2d);box-shadow:0 0 0 3px color-mix(in srgb,var(--primary-color,#568d2d) 12%,transparent)}.ds-input[aria-invalid=\"true\"]{border-color:var(--danger-color,#dc3545)}.ds-input:disabled{background:var(--background-accent-color-hover,#f8faf6);color:var(--gray-color,#67736b)}@media(prefers-reduced-motion:reduce){.ds-input{transition:none}}"
+    },
+    {
+      "name": "Navigation Item",
+      "kind": "nav",
+      "refersTo": "navigation-item-active",
+      "description": "The selected row in the persistent dark shell.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-nav-item\" href=\"#/overview\" aria-current=\"page\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><rect x=\"3\" y=\"4\" width=\"18\" height=\"13\" rx=\"1\"/><path d=\"M8 21h8M12 17v4\"/></svg>Обзор</a></nav>",
+      "css": ".ds-nav{background:var(--nav-bg,#202722);padding:14px;max-width:232px}.ds-nav-item{display:flex;gap:12px;align-items:center;min-height:43px;padding:12px;border-radius:7px;background:var(--nav-item-active,#384c2e);color:#e1f4ce;font:400 13px/1.45 var(--font,Roboto,sans-serif);text-decoration:none}.ds-nav-item svg{width:19px;height:19px;fill:none;stroke:#a8d87c;stroke-width:1.5}.ds-nav-item:hover{background:var(--nav-item-hover,#303c2d);color:#fff}.ds-nav-item:focus-visible{outline:3px solid #82b85a;outline-offset:3px}"
+    },
+    {
+      "name": "Model Tag",
+      "kind": "chip",
+      "refersTo": "model-tag",
+      "description": "Quiet outlined controller-model metadata.",
+      "html": "<span class=\"ds-model-tag\">WB7</span>",
+      "css": ".ds-model-tag{display:inline-block;padding:4px 6px;border:1px solid var(--border-color,#e0e6df);border-radius:4px;color:var(--gray-color,#67736b);font:400 10px var(--font,Roboto,sans-serif);letter-spacing:.035em}"
+    },
+    {
+      "name": "Native Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "A native content container with divided header and restrained depth.",
+      "html": "<section class=\"ds-card\"><h2 class=\"ds-card-title\">Каналы устройства</h2><div class=\"ds-card-body\">Состояние устройства</div></section>",
+      "css": ".ds-card{background:var(--content-background,#fff);border:1px solid var(--border-color,#e0e6df);border-radius:12px;box-shadow:0 2px 3px #24302903;color:var(--text-color,#243029);font:400 13px/1.5 var(--font,Roboto,sans-serif)}.ds-card-title{margin:0;padding:16px 18px;border-bottom:1px solid var(--border-color,#e0e6df);font-size:14px;font-weight:500;line-height:1.4}.ds-card-body{padding:12px 18px 16px}@media(max-width:640px){.ds-card-title{padding:15px}.ds-card-body{padding:10px 15px 14px}}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Operate mode",
+    "overview": "A restrained technical workspace for operating a controller. The original WB logo, Roboto, green actions and dark navigation carry the identity; pale green neutrals and white work surfaces organize dense information. Typography, borders and spacing establish hierarchy across the overview and native editors.\n\nThis records the implemented fork of homeui v2.208.1-wb100. It is an independent UI proposal. Its visual authority is the built application, including retained native widgets and editors, rather than a new decorative style for their contents.",
+    "keyCharacteristics": [
+      "Recognizable WB identity and technical terminology.",
+      "Persistent dark navigation beside a light workspace.",
+      "Quiet bordered surfaces, compact controls and readable telemetry.",
+      "Shared treatment across AngularJS and React screens."
+    ],
+    "rules": [
+      {
+        "name": "The Theme Continuity Rule",
+        "body": "New controls inherit the established semantic CSS variables and native state meanings.",
+        "section": "colors"
+      },
+      {
+        "name": "The Readable History Rule",
+        "body": "Preserve chart axes and summary text at (12px) at narrow widths. Reduce tick count when space is limited; do not shrink the labels with the plot. Use tabular numerals for readings and summaries.",
+        "section": "typography"
+      },
+      {
+        "name": "The Quiet Surface Rule",
+        "body": "Use borders and tone for resting structure; reserve substantial shadow for floating menus and dialogs.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** preserve the original WB logo, Roboto and green identity.",
+      "**Do** use semantic theme variables across new and native controls.",
+      "**Do** retain visible focus, validation, disabled and connection states.",
+      "**Do** keep readings tabular, units subordinate and chart axes readable on mobile.",
+      "**Do** wrap toolbars and stack forms while preserving editor and table usability."
+    ],
+    "donts": [
+      "**Don't** replace the WB identity or recolor native SVG content to match the shell.",
+      "**Don't** make destructive actions look like ordinary green actions.",
+      "**Don't** hardcode light colors where existing semantic theme variables apply.",
+      "**Don't** shrink chart labels with the plot or remove native status/error information.",
+      "**Don't** add decorative elevation or motion absent from the implemented system."
+    ]
+  }
+}

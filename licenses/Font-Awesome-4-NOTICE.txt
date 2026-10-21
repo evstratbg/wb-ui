@@ -1,0 +1,11 @@
+Font Awesome 4.2.0 by @davegandy
+http://fontawesome.io — @fontawesome
+
+Original source notice:
+License — http://fontawesome.io/license
+Font: SIL OFL 1.1
+CSS: MIT License
+
+The upstream CSS and font files are retained without modification.
+The complete license terms are reproduced in SIL-Open-Font-License-1.1.txt
+and MIT-terms.txt. The version 4 attribution above is unchanged.

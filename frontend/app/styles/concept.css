@@ -1,0 +1,1396 @@
+/* Native application surfaces. Loaded after the original application styles. */
+
+body .page {
+  padding-top: 2px;
+  line-height: 1.5;
+}
+
+body .page-headerContainer {
+  border-bottom: 0;
+  margin-bottom: 24px;
+  padding-bottom: 0;
+  min-height: 42px;
+  gap: 16px;
+}
+
+body .page-headerTitleWrapper {
+  height: auto;
+  min-height: 38px;
+}
+
+body .page-title,
+body #page-wrapper > .page-header,
+body #page-wrapper .logs-page > .page-header {
+  color: var(--text-color);
+  font-size: 26px;
+  font-weight: 500;
+  letter-spacing: -.65px;
+  line-height: 1.25;
+}
+
+body #page-wrapper > .page-header,
+body #page-wrapper .logs-page > .page-header {
+  border: 0;
+  margin: 2px 0 24px;
+  padding-bottom: 0;
+}
+
+body .page-actions {
+  gap: 8px;
+  align-items: center;
+}
+
+body .page-footer {
+  padding: 18px 0 4px;
+  margin-top: 10px;
+  border-top: 1px solid var(--border-color);
+}
+
+/* Content cards retain the native columns, collapse state and widget sizing. */
+body .columnsWrapper-container {
+  max-width: 100%;
+  gap: 20px;
+}
+
+body .card {
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  background: var(--content-background);
+  box-shadow: 0 2px 3px #24302903;
+  margin-bottom: 20px;
+}
+
+body .card .card-header,
+body .card .card-headerContainer {
+  background: var(--content-background);
+  color: var(--text-color);
+  border-radius: 12px 12px 0 0;
+}
+
+body .card .card-header {
+  min-height: 55px;
+  padding: 16px 18px;
+  gap: 14px;
+}
+
+body .card .card-header[aria-expanded="false"] {
+  border-radius: 12px;
+}
+
+body .card:has(.card-body) > .card-header,
+body .card:has(.card-body) > .card-headerContainer {
+  border-bottom: 1px solid var(--border-color);
+}
+
+body .card .card-title {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+  margin: 0;
+}
+
+body .card .card-titleWithError {
+  color: var(--danger-color);
+}
+
+body .card .card-body {
+  background: var(--content-background);
+  border-radius: 0 0 12px 12px;
+  padding: 12px 18px 16px;
+}
+
+body .card-tertiary .card-body {
+  background: var(--background-accent-color-hover);
+}
+
+body .card-actions {
+  gap: 10px;
+  color: var(--gray-color);
+}
+
+body .card .card-action {
+  opacity: .55;
+  color: var(--gray-color);
+  border-radius: 5px;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+body .card:hover .card-action,
+body .card:focus-within .card-action,
+body .card .card-action:focus-visible {
+  opacity: 1;
+  color: var(--primary-color-hover);
+}
+
+body .card .card-toggle {
+  color: var(--gray-color);
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+}
+
+body .deviceCell {
+  min-height: 40px;
+  margin-bottom: 0;
+  gap: 10px;
+  padding: 5px 0;
+  font-size: 13px;
+}
+
+body .card-body > .deviceCell + .deviceCell {
+  border-top: 1px solid var(--border-color);
+}
+
+body .deviceCell-name {
+  color: var(--text-color);
+  line-height: 1.35;
+}
+
+body .deviceCell-value {
+  font-weight: 500;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+
+body .deviceCell-units {
+  color: var(--gray-color);
+  font-size: 11px;
+  font-weight: 400;
+}
+
+body .deviceCell-error .deviceCell-name,
+body .deviceCell-error .deviceCell-value,
+body .deviceCell-error .deviceCell-units {
+  color: var(--danger-color);
+}
+
+body .deviceCell-historyLink {
+  color: var(--gray-color);
+  width: 18px;
+  min-width: 18px;
+}
+
+body .widgets-cellItem {
+  min-height: 42px;
+  height: auto;
+  margin-bottom: 0;
+}
+
+body .widgets-description {
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 0 0 12px;
+}
+
+body .widgets-actions {
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+body .dashboard-separator {
+  margin: 16px 0;
+}
+
+body .dashboard-separatorTitle {
+  color: var(--gray-color);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .35px;
+  text-transform: uppercase;
+}
+
+/* Shared buttons, form fields and selection menus, Angular and React. */
+body .button,
+body #page-wrapper .btn,
+body .modal .btn,
+body .je-modal .btn {
+  border-radius: 7px;
+  font-weight: 500;
+  box-shadow: none;
+  line-height: 1.4;
+  transition: background-color 140ms ease, border-color 140ms ease, box-shadow 140ms ease;
+}
+
+body .button-m {
+  height: 38px;
+  padding: 8px 14px;
+  font-size: 13px;
+}
+
+body .button-l {
+  min-height: 42px;
+  padding: 10px 16px;
+  font-size: 14px;
+}
+
+body .button-s {
+  height: 31px;
+  font-size: 12px;
+  padding: 5px 10px;
+}
+
+body #page-wrapper .btn,
+body .modal .btn {
+  min-height: 36px;
+  padding: 7px 13px;
+  font-size: 13px;
+}
+
+body #page-wrapper .btn-xs,
+body #page-wrapper .btn-sm,
+body .json-editor .btn-group .btn,
+body .je-header .btn {
+  min-height: 28px;
+  padding: 4px 8px;
+  font-size: 12px;
+}
+
+body .button-primary:not(.button-outlined),
+body #page-wrapper .btn-primary,
+body .modal .btn-primary,
+body .je-modal .btn-primary {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: var(--button-color);
+}
+
+body .button-primary:not(:disabled):not(.button-outlined):hover,
+body #page-wrapper .btn-primary:not(:disabled):hover,
+body .modal .btn-primary:not(:disabled):hover {
+  background: var(--primary-color-hover);
+  border-color: var(--primary-color-hover);
+}
+
+body .button-secondary,
+body #page-wrapper .btn-default,
+body .modal .btn-default {
+  background: var(--content-background);
+  color: var(--text-color);
+  border-color: var(--input-border-color);
+}
+
+body .button-secondary:not(:disabled):not(.button-outlined):hover,
+body #page-wrapper .btn-default:not(:disabled):hover,
+body .modal .btn-default:not(:disabled):hover {
+  color: var(--primary-color-hover);
+  background: var(--background-accent-color-hover);
+  border-color: var(--primary-color-hover);
+}
+
+body .button-unaccented:not(.button-outlined) {
+  background: var(--background-accent-color);
+  color: var(--text-color);
+  border-color: var(--background-accent-color);
+}
+
+body .button-outlined {
+  background: transparent;
+}
+
+body .button-primary.button-outlined {
+  color: var(--primary-color);
+}
+
+body .button:focus-visible,
+body #page-wrapper .btn:focus-visible,
+body .dialog .btn:focus-visible,
+body .tree-itemButton:focus-visible,
+body .tabs-button:focus-visible,
+body .card-headerToggable:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 3px;
+  box-shadow: none;
+}
+
+body .input,
+body .textarea,
+body #page-wrapper .form-control,
+body .modal .form-control,
+body .je-modal .form-control {
+  background: var(--content-background);
+  color: var(--text-color);
+  border-color: var(--input-border-color);
+  border-radius: 7px;
+  box-shadow: none;
+  font-size: 13px;
+  transition: border-color 140ms ease, box-shadow 140ms ease;
+}
+
+body .input-m,
+body #page-wrapper input.form-control,
+body #page-wrapper select.form-control,
+body .modal input.form-control,
+body .modal select.form-control {
+  height: 38px;
+  padding: 8px 11px;
+}
+
+body .input-s {
+  height: 31px;
+}
+
+body .input:focus,
+body .textarea:focus,
+body #page-wrapper .form-control:focus,
+body .modal .form-control:focus,
+body .editable-dropdown-focused {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary-color) 12%, transparent);
+  outline: none;
+}
+
+body .input:disabled,
+body #page-wrapper .form-control:disabled,
+body #page-wrapper .form-control[readonly] {
+  background: var(--background-accent-color-hover);
+  color: var(--gray-color);
+}
+
+body .input-invalid,
+body #page-wrapper .has-error .form-control,
+body .wb-jsonEditor-propertyInputError {
+  border-color: var(--danger-color);
+}
+
+body #page-wrapper input::placeholder,
+body #page-wrapper textarea::placeholder,
+body .input::placeholder {
+  color: var(--gray-color);
+  font-weight: 400;
+}
+
+body #page-wrapper label,
+body .dialog label {
+  font-weight: 400;
+}
+
+body #page-wrapper .control-label,
+body .wb-jsonEditor-propertyLabel,
+body .form-field > label {
+  color: var(--text-color);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.45;
+  margin-bottom: 7px;
+}
+
+body .form-fieldDescription,
+body .form-descriptionText,
+body .wb-jsonEditor-propertyDescription,
+body #page-wrapper .help-block,
+body .widgets-description {
+  color: var(--gray-color);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+body .form-errorText,
+body .wb-jsonEditor-errorText,
+body .wb-jsonEditor-propertyLabelError,
+body .wb-jsonEditor-propertyCheckboxError {
+  color: var(--danger-color);
+}
+
+body .form-defaultText,
+body .wb-jsonEditor-defaultText,
+body .form-edit-default-text {
+  color: var(--gray-color);
+  background: var(--background-accent-color);
+  border-radius: 4px;
+  padding: 2px 5px;
+}
+
+body .dropdown__control,
+body .wb-react-select .wb-react-select__control {
+  border-color: var(--input-border-color);
+  border-radius: 7px;
+  background: var(--content-background);
+  color: var(--text-color);
+  box-shadow: none;
+  font-size: 13px;
+}
+
+body .dropdown-m .dropdown__control {
+  min-height: 38px !important;
+  padding: 8px 11px;
+}
+
+body .wb-react-select .wb-react-select__control {
+  height: auto;
+  min-height: 38px;
+}
+
+body .dropdown__control--is-focused,
+body .wb-react-select .wb-react-select__control--is-focused {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary-color) 12%, transparent);
+}
+
+body .dropdown__menu,
+body .dropdown__menu-portal,
+body .wb-react-select__menu,
+body .ui-select-bootstrap .ui-select-choices,
+body .dropdown-menu {
+  border-color: var(--input-border-color);
+  border-radius: 8px;
+  box-shadow: 0 8px 28px #24302914;
+  font-size: 13px;
+}
+
+body .dropdown__option--is-focused,
+body .wb-react-select__option--is-focused,
+body .ui-select-bootstrap .ui-select-choices-row.active > span,
+body .dropdown-menu > li > a:hover,
+body .dropdown-menu > li > a:focus {
+  color: var(--primary-color-hover);
+  background: var(--background-accent-color);
+}
+
+body .dropdown__option--is-selected,
+body .wb-react-select__option--is-selected {
+  background: var(--primary-color);
+  color: var(--button-color);
+}
+
+body .dropdown-button .dropdown__control {
+  color: var(--button-color);
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+body .dropdown-invalid .dropdown__control,
+body .wb-jsonEditor-propertyDropdownError > div.dropdown__control,
+body .has-error .wb-react-select .wb-react-select__control {
+  border-color: var(--danger-color);
+}
+
+body .toggle-switchy > input + .toggle {
+  width: 36px;
+  height: 20px;
+}
+
+body .toggle-switchy > input + .toggle > .switch {
+  width: 12px;
+  height: 12px;
+}
+
+body .toggle-switchy > input:not(:checked) + .toggle {
+  background: var(--input-border-color);
+  outline: 1px solid var(--input-border-color);
+}
+
+body .toggle-switchy > input:not(:checked) + .toggle > .switch {
+  background: var(--gray-color);
+  right: calc(100% - 20px);
+}
+
+body .toggle-switchy > input:checked + .toggle {
+  background: var(--primary-color);
+}
+
+body .range {
+  background: var(--background-accent-color);
+  height: 6px;
+}
+
+body .wb-checkbox,
+body .radio {
+  gap: 8px;
+}
+
+body .wb-checkbox input,
+body .radio input,
+body #page-wrapper input[type="checkbox"],
+body #page-wrapper input[type="radio"] {
+  accent-color: var(--primary-color);
+}
+
+/* Tables keep their columns and horizontal scrolling where content requires it. */
+body .wb-tableWrapper {
+  background: var(--content-background);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+}
+
+body .wb-table {
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 13px;
+  color: var(--text-color);
+}
+
+body .wb-tableCell {
+  padding: 13px 14px;
+  line-height: 1.45;
+}
+
+body .wb-tableCell:first-of-type {
+  padding-left: 18px;
+}
+
+body .wb-tableCell:last-of-type {
+  padding-right: 18px;
+}
+
+body .wb-tableCellWithoutPadding {
+  padding: 0;
+}
+
+body .wb-tableRowHeading .wb-tableCell {
+  background: var(--background-accent-color-hover);
+  color: var(--gray-color);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .3px;
+  border-bottom: 1px solid var(--input-border-color);
+}
+
+body .wb-tableRow:not(:last-of-type) .wb-tableCell {
+  border-bottom-color: var(--border-color);
+}
+
+body .wb-tableRow:not(.wb-tableRowHeading):hover .wb-tableCell,
+body .wb-tableRow:not(.wb-tableRowHeading):focus .wb-tableCell,
+body .wb-tableRow:not(.wb-tableRowHeading):focus-within .wb-tableCell {
+  background: var(--table-item-hover);
+}
+
+body .wb-tableCellWithLink {
+  color: var(--primary-color-hover);
+}
+
+body .wb-tableCellHeader {
+  gap: 8px;
+}
+
+body .wb-tableCellSortButton {
+  padding: 2px;
+  height: 20px;
+}
+
+body .card-body .wb-tableWrapper {
+  border-radius: 7px;
+}
+
+body #page-wrapper .table {
+  background: var(--content-background);
+  color: var(--text-color);
+  font-size: 13px;
+}
+
+body #page-wrapper .table > thead > tr > th {
+  padding: 12px;
+  background: var(--background-accent-color-hover);
+  color: var(--gray-color);
+  font-size: 11px;
+  font-weight: 500;
+  border-bottom: 1px solid var(--border-color);
+}
+
+body #page-wrapper .table > tbody > tr > td {
+  padding: 11px 12px;
+  border-color: var(--border-color);
+  vertical-align: middle;
+}
+
+body #page-wrapper .table-bordered,
+body #page-wrapper .table-bordered > thead > tr > th,
+body #page-wrapper .table-bordered > tbody > tr > td {
+  border-color: var(--border-color);
+}
+
+/* Content navigation, preserving selection and validation markers. */
+body .tabs-horizontal {
+  border-radius: 0;
+  border-bottom: 1px solid var(--border-color);
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+body .tabs-horizontal li {
+  border-top: 0;
+  border-bottom: 2px solid transparent;
+  flex-shrink: 0;
+}
+
+body .tabs-horizontal .tabs-button {
+  padding: 12px 10px;
+  border: 0;
+  color: var(--gray-color);
+  font-size: 13px;
+}
+
+body .tabs-horizontal .tabs-buttonSelected {
+  background: transparent;
+  border-top: 0;
+  border-bottom-color: var(--primary-color);
+  margin-bottom: -1px;
+  font-weight: 500;
+}
+
+body .tabs-horizontal .tabs-buttonSelected .tabs-button {
+  border: 0;
+  color: var(--primary-color-hover);
+}
+
+body .tabs-vertical {
+  background: var(--content-background);
+  border-color: var(--border-color);
+  border-radius: 10px;
+  padding: 5px;
+}
+
+body .tabs-vertical .tabs-button {
+  color: var(--gray-color);
+  padding: 11px 12px;
+  font-size: 13px;
+  border-radius: 6px;
+}
+
+body .tabs-vertical li:not(:last-of-type) .tabs-button {
+  border-bottom: 0;
+}
+
+body .tabs-vertical .tabs-buttonSelected {
+  border-right: 0 !important;
+  background: var(--background-accent-color);
+  border-radius: 6px;
+}
+
+body .tabs-vertical .tabs-buttonSelected .tabs-button {
+  color: var(--primary-color-hover);
+  font-weight: 500;
+}
+
+body #page-wrapper .nav-tabs {
+  border-bottom-color: var(--border-color);
+  margin-bottom: 14px;
+}
+
+body #page-wrapper .nav-tabs > li > a {
+  color: var(--gray-color);
+  border: 0;
+  border-bottom: 2px solid transparent;
+  padding: 12px;
+  border-radius: 0;
+  font-size: 13px;
+}
+
+body #page-wrapper .nav-tabs > li.active > a,
+body #page-wrapper .nav-tabs > li.active > a:hover,
+body #page-wrapper .nav-tabs > li.active > a:focus {
+  color: var(--primary-color-hover);
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid var(--primary-color);
+}
+
+body #page-wrapper .nav-pills > li > a {
+  color: var(--gray-color);
+  border-radius: 7px;
+  padding: 10px 12px;
+}
+
+body #page-wrapper .nav-pills > li.active > a,
+body #page-wrapper .nav-pills > li.active > a:hover {
+  color: var(--primary-color-hover);
+  background: var(--background-accent-color);
+}
+
+body #page-wrapper .nav-pills > li.has-error > a,
+body #page-wrapper .nav-pills > li.has-error > a:hover,
+body #page-wrapper .nav-pills > li.has-error > a:focus {
+  color: var(--danger-color);
+}
+
+body .tree {
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  background: var(--content-background);
+  padding: 5px;
+}
+
+body .tree-itemActive {
+  color: var(--primary-color-hover);
+  background: var(--background-accent-color);
+}
+
+body .tree-itemActive .tree-children {
+  background: var(--background-accent-color-hover);
+}
+
+body .tree-m .tree-itemButton {
+  padding: 10px;
+}
+
+/* Schema editors and legacy configuration panels. */
+body #page-wrapper .panel,
+body .json-editor .panel {
+  background: var(--content-background);
+  border-color: var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 2px 3px #24302903;
+  margin-bottom: 20px;
+}
+
+body #page-wrapper .panel-heading {
+  color: var(--text-color);
+  background: var(--content-background);
+  border-color: var(--border-color);
+  border-radius: 12px 12px 0 0;
+  padding: 17px 20px;
+}
+
+body #page-wrapper .panel-title {
+  color: var(--text-color);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+body #page-wrapper .panel-title > i {
+  color: var(--gray-color);
+  margin-right: 7px;
+}
+
+body #page-wrapper .panel-body {
+  padding: 18px 20px;
+}
+
+body #page-wrapper .panel-footer {
+  background: var(--background-accent-color-hover);
+  border-color: var(--border-color);
+  padding: 14px 20px;
+  border-radius: 0 0 12px 12px;
+}
+
+body #page-wrapper .well {
+  background: var(--background-accent-color-hover);
+  border-color: var(--border-color);
+  border-radius: 10px;
+  box-shadow: none;
+  padding: 16px;
+}
+
+body .json-editor .well {
+  margin-bottom: 16px;
+}
+
+body .json-editor .je-header {
+  color: var(--text-color);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+body .json-editor .je-header > label {
+  font-weight: 500;
+  font-size: 13px;
+}
+
+body .json-editor .form-group {
+  margin-bottom: 17px;
+}
+
+body .json-editor .je-modal {
+  background: var(--content-background);
+  border: 1px solid var(--input-border-color);
+  border-radius: 9px;
+  box-shadow: 0 10px 32px #2430291a;
+}
+
+body .form-header {
+  border-bottom: 1px solid var(--border-color);
+  padding: 10px 0 13px;
+  margin-bottom: 18px;
+}
+
+body .form-caption {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+body .form-content {
+  gap: 16px;
+}
+
+body .wb-jsonEditor-objectEditor {
+  gap: 18px;
+}
+
+body .wb-jsonEditor-objectEditorRow {
+  gap: 16px;
+}
+
+body .wb-jsonEditor-objectEditorWithBorder,
+body .deviceSettingsEditor-subGroupContentWithBorder,
+body .deviceSettingsEditor-customChannelsNoTabs .wb-jsonEditor {
+  border-color: var(--border-color);
+  border-radius: 10px;
+  background: var(--background-accent-color-hover);
+  padding: 16px;
+}
+
+body .wb-jsonEditor-arrayEditor {
+  gap: 14px;
+}
+
+body .deviceSettingsEditor {
+  gap: 20px;
+}
+
+body .deviceSettingsEditor-tabContent,
+body .deviceTab-contentHeaderSelect,
+body .wb-jsonEditor-objectProperty {
+  min-width: 0;
+}
+
+body .deviceTab-contentHeader {
+  gap: 12px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 14px;
+}
+
+body .deviceTab-contentHeaderButtons {
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+body .deviceSettingsEditor-shouldStoreInConfig .dropdown__control,
+body .deviceSettingsEditor-shouldStoreInConfig input {
+  border-left: 4px solid var(--gray-color);
+}
+
+body .deviceSettingsEditor-hasBadValueFromRegisters .dropdown__control,
+body .deviceSettingsEditor-hasBadValueFromRegisters input {
+  border-color: var(--orange-color);
+}
+
+body .dali {
+  gap: 20px;
+}
+
+body .dali-content {
+  border-color: var(--border-color);
+  background: var(--content-background);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+body .dali-deviceToolbar {
+  background: var(--content-background);
+  border-color: var(--border-color);
+  top: -20px;
+  margin: -20px -20px 0;
+  padding: 16px 20px;
+}
+
+body .networkConnections-content {
+  margin-top: 6px;
+}
+
+body .connectionItem {
+  gap: 14px;
+}
+
+body .users-actions,
+body .form-buttonGroup {
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+body .users-autologin {
+  margin-top: 24px;
+  gap: 10px;
+}
+
+body .web-ui-settings-pageContent {
+  gap: 20px;
+}
+
+/* History, rules and logs preserve native plot/editor/virtual-scroll internals. */
+body .history-channelWrapper {
+  margin-bottom: 10px;
+  gap: 10px;
+}
+
+body .history-dateFilter {
+  margin: 22px 0;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+body .history-loadActions {
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+body .history-dateWrapper {
+  gap: 10px;
+}
+
+body .history-label {
+  color: var(--gray-color);
+  font-size: 13px;
+}
+
+body .history-table {
+  margin-top: 18px;
+}
+
+body .js-plotly-plot {
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  background: var(--content-background);
+}
+
+body .editRule-container {
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  background: var(--content-background);
+}
+
+body .editRule-container .cm-editor,
+body .editRule-container .ace_editor {
+  border-radius: 12px;
+}
+
+body .cm-editor {
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+body .cm-editor.cm-focused {
+  outline: 1px solid var(--primary-color);
+}
+
+body .rulesConsole {
+  background: var(--content-background);
+  border-top: 1px solid var(--input-border-color);
+  box-shadow: 0 -3px 18px #2430290a;
+}
+
+body .rulesConsole-header {
+  min-height: 46px;
+  padding: 8px 16px;
+  background: var(--background-accent-color-hover);
+  border-color: var(--border-color);
+}
+
+body .rulesConsole-log {
+  padding: 7px 16px;
+  border-color: var(--border-color);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+body .rulesConsole-logDate {
+  color: var(--gray-color);
+}
+
+body .logs-page .log-filter {
+  margin-bottom: 12px;
+}
+
+body .logs-page .logs-button {
+  min-height: 38px;
+  height: 38px;
+}
+
+body #logs-wrapper {
+  background: var(--content-background);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  margin-top: 12px;
+}
+
+body #logs-table {
+  border-collapse: collapse;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+body #logs-table td {
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--border-color);
+  vertical-align: top;
+}
+
+body #logs-table .logs-time-column {
+  color: var(--gray-color);
+  background: var(--background-accent-color-hover);
+}
+
+body #logs-table .logs-message-column {
+  padding-left: 16px;
+  overflow-wrap: anywhere;
+}
+
+/* Notices and dialogs remain explicit; destructive actions retain their color. */
+body .alertMessage,
+body #page-wrapper .alert {
+  border-radius: 9px;
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+body .alertMessage-m {
+  padding: 14px 16px;
+}
+
+body .alertMessage-info,
+body #page-wrapper .alert-info {
+  color: var(--alert-color);
+  background: var(--alert-info-background);
+  border-color: var(--alert-info-border);
+}
+
+body .alertMessage-success,
+body #page-wrapper .alert-success {
+  color: var(--alert-color);
+  background: var(--alert-success-background);
+  border-color: var(--alert-success-border);
+}
+
+body .alertMessage-warn,
+body #page-wrapper .alert-warning {
+  color: var(--alert-color);
+  background: var(--alert-warn-background);
+  border-color: var(--alert-warn-border);
+}
+
+body .alertMessage-danger,
+body #page-wrapper .alert-danger {
+  color: var(--alert-color);
+  background: var(--alert-danger-background);
+  border-color: var(--alert-danger-border);
+}
+
+body .deviceCell-alert.alertMessage-danger {
+  color: var(--button-color);
+  background: var(--danger-color);
+  border-color: var(--danger-color-hover);
+}
+
+body .dialog,
+body .modal-content {
+  background: var(--content-background);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  color: var(--text-color);
+  box-shadow: 0 18px 70px #15210c33;
+}
+
+body .dialog-overlay {
+  background: #1a251a80;
+}
+
+body .dialog-header,
+body .modal-header {
+  padding: 22px 24px 18px;
+  border-color: var(--border-color);
+}
+
+body .dialog-title,
+body .modal-title {
+  color: var(--text-color);
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: -.25px;
+}
+
+body .dialog-content,
+body .confirm-content,
+body .modal-body {
+  padding: 8px 24px 24px;
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+body .dialog-close {
+  color: var(--gray-color);
+}
+
+body .dialog-close:hover {
+  background: var(--background-accent-color);
+  color: var(--primary-color);
+}
+
+body .confirm-actions,
+body .modal-footer {
+  padding: 16px 24px;
+  margin-top: 0;
+  background: var(--background-accent-color-hover);
+  border-color: var(--border-color);
+  border-radius: 0 0 14px 14px;
+  gap: 8px;
+}
+
+body .dialog .form-field,
+body .dialog .editUser-field {
+  margin-bottom: 16px;
+}
+
+@media (max-width: 900px) {
+  body .page-headerContainer {
+    gap: 12px;
+  }
+
+  body .page-title,
+  body #page-wrapper > .page-header,
+  body #page-wrapper .logs-page > .page-header {
+    font-size: 23px;
+  }
+
+  body .dali {
+    gap: 14px;
+  }
+}
+
+@media (max-width: 640px) {
+  body .page-headerContainer {
+    margin-bottom: 18px;
+  }
+
+  body .page-headerTitleWrapper {
+    min-height: 34px;
+  }
+
+  body .page-title,
+  body #page-wrapper > .page-header,
+  body #page-wrapper .logs-page > .page-header {
+    font-size: 22px;
+    letter-spacing: -.4px;
+  }
+
+  body .page-actions {
+    gap: 6px;
+  }
+
+  body .card,
+  body .widgets-card {
+    max-width: 100%;
+  }
+
+  body .card .card-header {
+    padding: 15px;
+  }
+
+  body .card .card-body {
+    padding: 10px 15px 14px;
+  }
+
+  body .deviceCell {
+    min-height: 44px;
+  }
+
+  body .deviceCell-name {
+    white-space: normal;
+  }
+
+  body .card .card-action {
+    opacity: 1;
+  }
+
+  body .wb-tableCell {
+    padding: 12px 10px;
+  }
+
+  body .wb-tableCell:first-of-type {
+    padding-left: 14px;
+  }
+
+  body .wb-tableCell:last-of-type {
+    padding-right: 14px;
+  }
+
+  body .wb-tableCellWithoutPadding {
+    padding: 0;
+  }
+
+  body .wb-tableCellInvisible {
+    visibility: visible;
+  }
+
+  body .history-channel {
+    width: 100%;
+    max-width: 100%;
+    flex-shrink: 1;
+    min-width: 0;
+  }
+
+  body .history-dateFilter {
+    gap: 14px;
+    margin: 18px 0;
+  }
+
+  body .history-dateWrapper {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  body .history-date {
+    flex: 1;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  body .history-loadActions {
+    gap: 8px;
+  }
+
+  body .tabs-horizontal {
+    gap: 0;
+  }
+
+  body .tabs-horizontal .tabs-button {
+    padding: 11px 10px;
+  }
+
+  body .deviceSettingsEditor-tabs {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  body .deviceSettingsEditor-tabs > .tabs {
+    width: 100%;
+    max-height: 230px;
+    overflow-y: auto;
+  }
+
+  body .deviceSettingsEditor-tabContent {
+    margin-left: 0;
+  }
+
+  body .deviceSettingsEditor-topGroupContent,
+  body .deviceSettingsEditor-subGroupContent,
+  body .wb-jsonEditor-objectEditorRow {
+    gap: 14px;
+  }
+
+  body .deviceSettingsEditor-parameter,
+  body .wb-jsonEditor-objectEditorRow > .wb-jsonEditor-objectProperty {
+    flex-basis: 100% !important;
+    min-width: 0;
+  }
+
+  body .wb-jsonEditor-propertyLabel,
+  body .wb-jsonEditor-propertyCheckbox {
+    white-space: normal;
+  }
+
+  body .wb-jsonEditor-objectEditorWithBorder,
+  body .deviceSettingsEditor-subGroupContentWithBorder,
+  body .deviceSettingsEditor-customChannelsNoTabs .wb-jsonEditor {
+    padding: 12px;
+  }
+
+  body .deviceTab-contentHeaderSelect {
+    flex-basis: 100%;
+  }
+
+  body .deviceTab-contentHeaderButtons {
+    width: 100%;
+  }
+
+  body .dali-content {
+    padding: 14px;
+  }
+
+  body .dali-deviceToolbar {
+    top: -14px;
+    padding: 12px 14px;
+    margin: -14px -14px 0;
+  }
+
+  body .dali-level-slider,
+  body .dali-color-temperature-slider,
+  body .dali-white-editor,
+  body .dali-rgb-editor {
+    min-width: 0;
+  }
+
+  body .rulesConsole {
+    min-width: 0;
+  }
+
+  body .rulesConsole-header {
+    flex-wrap: wrap;
+    padding: 8px 12px;
+  }
+
+  body .rulesConsole-headerActions {
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  body .rulesConsole-log {
+    padding: 6px 12px;
+    flex-wrap: wrap;
+    overflow-wrap: anywhere;
+  }
+
+  body .rulesConsole-logDate {
+    width: 100%;
+    font-size: 10px;
+  }
+
+  body #logs-table td {
+    padding: 8px;
+  }
+
+  body #logs-table .logs-message-column {
+    padding-left: 10px;
+  }
+
+  body #page-wrapper .panel-body,
+  body #page-wrapper .panel-heading {
+    padding: 16px;
+  }
+
+  body #page-wrapper .panel-body > .btn.pull-left {
+    float: none !important;
+    max-width: 100%;
+    white-space: normal;
+    margin-bottom: 8px;
+  }
+
+  body .dialog-header,
+  body .modal-header {
+    padding: 18px 18px 14px;
+  }
+
+  body .dialog-content,
+  body .confirm-content,
+  body .modal-body {
+    padding: 6px 18px 20px;
+  }
+
+  body .confirm-actions,
+  body .modal-footer {
+    padding: 14px 18px;
+    flex-wrap: wrap;
+  }
+
+  body .json-editor .je-modal {
+    max-width: calc(100vw - 38px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body .card,
+  body .card-header,
+  body .card-headerContainer,
+  body .card-body,
+  body .button,
+  body .input,
+  body .textarea {
+    transition: none;
+  }
+}

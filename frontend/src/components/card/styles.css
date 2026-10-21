@@ -1,0 +1,161 @@
+.card {
+    border-radius: var(--card-border-radius);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+    margin-bottom: 18px;
+    max-width: 450px;
+    width: 100%;
+    transition: background ease 300ms, border ease 300ms;
+    display: inline-block;
+}
+
+.card-header {
+    border-radius: var(--card-border-radius);
+    width: 100%;
+    padding: var(--card-header-padding);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background-color ease 300ms;
+    user-select: none;
+}
+
+.card-header:not(.card-headerToggable) {
+    border-radius: 0;
+}
+
+.card-headerContainer {
+    position: relative;
+    transition: background-color ease 300ms;
+}
+
+.card-headerToggable {
+    border: 0;
+    width: 100%;
+    cursor: pointer;
+}
+
+.card-headerToggable:focus {
+    box-shadow: var(--input-active-shadow);
+    transition: var(--input-active-shadow-transition);
+}
+
+.card-title {
+    font-size: var(--font-size-medium);
+    font-weight: 400;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.card-titleWithError {
+    color: var(--danger-color);
+}
+
+.card-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.card-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    opacity: 0;
+    transition: opacity ease 150ms, text-shadow ease 150ms;
+    border-radius: 4px;
+    width: 16px;
+    height: 16px;
+    overflow: hidden;
+
+    @media(max-width: 768px) {
+        opacity: 1;
+    }
+}
+
+.card:hover .card-action,
+.card:focus-within .card-action,
+.card-action:focus {
+    opacity: 1;
+}
+
+button:not(:disabled).card-action:hover,
+button:not(:disabled).card-action:focus {
+    box-shadow: var(--input-active-shadow);
+    transition: var(--input-active-shadow-transition);
+}
+
+.card-toggle {
+    width: 16px;
+    height: 16px;
+}
+
+.card-body {
+    background: var(--card-body-background);
+    padding: var(--card-body-padding);
+    font-size: var(--font-size-medium);
+    color: var(--text-color);
+    border-radius: 0 0 var(--card-border-radius) var(--card-border-radius);
+    transition: background ease 300ms, color ease 300ms;
+}
+
+.card-primary {
+    border: 1px solid var(--card-header-background);
+}
+
+.card-primary .card-header {
+    background-color: var(--card-header-background);
+    color: var(--card-header-text);
+}
+
+.card-primary .card-headerContainer {
+    background-color: var(--card-header-background);
+}
+
+.card-primary .card-action {
+    color: var(--card-header-text);
+}
+
+.card-primary .card:hover .card-action,
+.card-primary .card:focus-within .card-action,
+.card-primary .card-action:focus {
+    color: var(--card-header-text);
+}
+
+.card-secondary {
+    border: 1px solid var(--input-border-color);
+}
+
+.card-secondary .card-header {
+    background-color: var(--border-color);
+    color: var(--text-color);
+}
+
+.card-secondary .card-headerContainer {
+    background-color: var(--border-color);
+}
+
+.card-tertiary {
+    border: 1px solid var(--input-border-color);
+}
+
+.card-tertiary .card-header {
+    background-color: var(--border-color);
+    color: var(--text-color);
+}
+
+.card-tertiary .card-headerContainer {
+    background-color: var(--border-color);
+}
+
+.card-tertiary .card-body {
+    background-color: var(--background-accent-color-hover);
+}
+
+button:disabled.card-action svg {
+    color: var(--light-gray-color);
+}

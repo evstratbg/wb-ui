@@ -1,0 +1,35 @@
+.devices-column .card-body {
+  overflow: hidden;
+}
+
+.devices-searchbar {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+.devices-searchbar .input {
+  width: 320px;
+  max-width: 100%;
+}
+.devices-searchbar > span {
+  color: var(--gray-color);
+  font-size: 12px;
+}
+.devices-searchbar > a {
+  color: var(--link-color);
+  margin-left: auto;
+  font-size: 12px;
+}
+@media (max-width: 600px) {
+  .devices-searchbar {
+    gap: 10px;
+  }
+  .devices-searchbar .input {
+    width: 100%;
+  }
+  .devices-searchbar > a {
+    font-size: 11px;
+  }
+}
