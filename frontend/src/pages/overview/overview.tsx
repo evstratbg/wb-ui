@@ -16,6 +16,7 @@ import { authStore, UserRole } from '@/stores/auth';
 import { type DevicesStore, type Cell } from '@/stores/devices';
 import { uiStore } from '@/stores/ui';
 import OverviewHistory from './overview-history';
+import { deviceHref } from '@/pages/devices/device-model';
 import './styles.css';
 
 const channelCount = (count: number, locale: string) => {
@@ -106,7 +107,7 @@ const OverviewPage = observer(({ devicesStore: store, historyProxy }: { devicesS
               <div className="overview-deviceList">{devices.slice(0, 5).map((device) => {
                 const controls = store.getDeviceCells(device.id);
                 const hasError = controls.some((cell) => !!cell.error?.length);
-                return <DeviceRow className="overview-deviceRow" key={device.id} href={canViewDevices ? '#!/devices' : undefined} onClick={canViewDevices ? () => { if (!device.isVisible) device.toggleDeviceVisibility(); } : undefined}><span className="overview-deviceTile"><SitemapIcon /></span><span className="overview-deviceName"><strong>{device.name}</strong><small>{device.id} · {channelCount(controls.length, locale)}</small></span><span className={`overview-statusTag ${hasError ? 'overview-warning' : ''}`}><i className="overview-dot" />{hasError ? text('Есть ошибки', 'Errors reported') : text('Без ошибок', 'No errors reported')}</span>{canViewDevices && <ArrowRightIcon />}</DeviceRow>;
+                return <DeviceRow className="overview-deviceRow" key={device.id} href={canViewDevices ? deviceHref({ device: device.id }) : undefined}><span className="overview-deviceTile"><SitemapIcon /></span><span className="overview-deviceName"><strong>{device.name}</strong><small>{device.id} · {channelCount(controls.length, locale)}</small></span><span className={`overview-statusTag ${hasError ? 'overview-warning' : ''}`}><i className="overview-dot" />{hasError ? text('Есть ошибки', 'Errors reported') : text('Без ошибок', 'No errors reported')}</span>{canViewDevices && <ArrowRightIcon />}</DeviceRow>;
               })}{!devices.length && <p className="overview-emptyText">{text('Устройства появятся после подключения к контроллеру.', 'Devices will appear after connecting to the controller.')}</p>}</div>
             </Panel>
           </div>
@@ -121,7 +122,7 @@ const OverviewPage = observer(({ devicesStore: store, historyProxy }: { devicesS
               {canConfigure && <div className="overview-panelFooter"><Link href="network-connections">{text('Настроить сеть', 'Configure network')}</Link></div>}
             </Panel>
             <Panel title={text('Состояние каналов', 'Channel status')} icon={SettingsIcon}>
-              {issues.length ? <div className="overview-issues">{issues.slice(0, 5).map((cell) => <DeviceRow href={canViewDevices ? '#!/devices' : undefined} key={cell.id}><WarnIcon /><span><strong>{label(cell, locale)}</strong><small>{cell.deviceId} · {text('ошибка', 'error')} {cell.error.join('')}</small></span>{canViewDevices && <ArrowRightIcon />}</DeviceRow>)}</div> : <div className="overview-health"><CheckIcon /><strong>{uiStore.isConnected ? text('Ошибок каналов не получено', 'No channel errors reported') : text('Ожидание соединения', 'Waiting for connection')}</strong><p>{text('Статусы и показания каждого канала доступны в разделе устройств.', 'View the status and readings of every channel in Devices.')}</p></div>}
+              {issues.length ? <div className="overview-issues">{issues.slice(0, 5).map((cell) => <DeviceRow href={canViewDevices ? deviceHref({ device: cell.deviceId, tab: 'diagnostics' }) : undefined} key={cell.id}><WarnIcon /><span><strong>{label(cell, locale)}</strong><small>{cell.deviceId} · {text('ошибка', 'error')} {cell.error.join('')}</small></span>{canViewDevices && <ArrowRightIcon />}</DeviceRow>)}</div> : <div className="overview-health"><CheckIcon /><strong>{uiStore.isConnected ? text('Ошибок каналов не получено', 'No channel errors reported') : text('Ожидание соединения', 'Waiting for connection')}</strong><p>{text('Статусы и показания каждого канала доступны в разделе устройств.', 'View the status and readings of every channel in Devices.')}</p></div>}
             </Panel>
           </aside>
         </div>

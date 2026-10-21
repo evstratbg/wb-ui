@@ -1,0 +1,142 @@
+.device-diagnostics {
+  min-width: 0;
+}
+
+.device-diagnostics-section + .device-diagnostics-section {
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-color);
+}
+
+.device-diagnostics-section h3 {
+  margin: 0 0 16px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.device-diagnostics-facts {
+  margin: 0 0 16px;
+}
+
+.device-diagnostics-facts > div {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 8px 20px;
+  padding: 7px 0;
+}
+
+.device-diagnostics-facts dt {
+  font-weight: 400;
+  color: var(--gray-color);
+}
+
+.device-diagnostics-facts dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.device-diagnostics-facts code {
+  display: inline-block;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.device-diagnostics-hint {
+  max-width: 75ch;
+  color: var(--gray-color);
+  line-height: 1.6;
+}
+
+.device-diagnostics-errors {
+  padding-left: 20px;
+}
+
+.device-diagnostics-errors > li {
+  margin-top: 16px;
+}
+
+.device-diagnostics-errors > li > code {
+  margin-left: 10px;
+  overflow-wrap: anywhere;
+}
+
+.device-diagnostics-errors ul {
+  margin-top: 8px;
+  padding-left: 20px;
+  line-height: 1.6;
+}
+
+.device-diagnostics-available {
+  display: block;
+  margin-top: 4px;
+  color: var(--gray-color);
+}
+
+.device-diagnostics-logActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 16px 0;
+}
+
+.device-diagnostics-logScope {
+  margin-top: 20px;
+  color: var(--gray-color);
+}
+
+.device-diagnostics-logEntries {
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.device-diagnostics-logEntries > li {
+  padding: 12px 0;
+  border-top: 1px solid var(--border-color);
+}
+
+.device-diagnostics-logEntries > li > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  color: var(--gray-color);
+  font-size: 12px;
+}
+
+.device-diagnostics-logEntries time {
+  font-variant-numeric: tabular-nums;
+}
+
+.device-diagnostics-logEntries pre {
+  margin: 8px 0 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text-color);
+  font-size: 12px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.device-diagnostics-danger {
+  color: var(--danger-color);
+}
+
+.device-diagnostics-warning {
+  color: var(--text-color);
+  font-weight: 500;
+}
+
+@media (max-width: 640px) {
+  .device-diagnostics-facts > div {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
+    padding: 9px 0;
+  }
+
+  .device-diagnostics-errors > li > code {
+    display: block;
+    margin: 4px 0 0;
+  }
+}

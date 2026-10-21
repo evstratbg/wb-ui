@@ -16,6 +16,7 @@ export default class Device {
   public id: string;
   public cells: Set<string> = new Set();
   public explicit: boolean = false;
+  public error: string = '';
   public isVisible: boolean = true;
   private _name: string;
   private _nameTranslations: NameTranslations = {};

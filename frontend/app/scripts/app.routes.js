@@ -78,8 +78,14 @@ function routing($stateProvider, $locationProvider, $urlRouterProvider) {
     })
     //...........................................................................
     .state('devices', {
-      url: '/devices?search',
-      params: { search: { dynamic: true } },
+      url: '/devices?search&device&tab&filter&channel',
+      params: {
+        search: { dynamic: true },
+        device: { dynamic: true },
+        tab: { dynamic: true },
+        filter: { dynamic: true },
+        channel: { dynamic: true },
+      },
       template: '<devices-page />',
       resolve: {
         ctrl: ($q, $ocLazyLoad) => {

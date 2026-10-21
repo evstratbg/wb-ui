@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-21T08:00:47+00:00",
+  "generatedAt": "2026-10-21T08:44:04+00:00",
   "title": "Design System: Wiren Board UI concept",
   "extensions": {
     "colorMeta": {
@@ -461,6 +461,10 @@
         "value": "1050px"
       },
       {
+        "name": "devices-full-width",
+        "value": "1000px"
+      },
+      {
         "name": "overview-single-column",
         "value": "980px"
       },
@@ -530,6 +534,20 @@
       "description": "A native content container with divided header and restrained depth.",
       "html": "<section class=\"ds-card\"><h2 class=\"ds-card-title\">Каналы устройства</h2><div class=\"ds-card-body\">Состояние устройства</div></section>",
       "css": ".ds-card{background:var(--content-background,#fff);border:1px solid var(--border-color,#e0e6df);border-radius:12px;box-shadow:0 2px 3px #24302903;color:var(--text-color,#243029);font:400 13px/1.5 var(--font,Roboto,sans-serif)}.ds-card-title{margin:0;padding:16px 18px;border-bottom:1px solid var(--border-color,#e0e6df);font-size:14px;font-weight:500;line-height:1.4}.ds-card-body{padding:12px 18px 16px}@media(max-width:640px){.ds-card-title{padding:15px}.ds-card-body{padding:10px 15px 14px}}"
+    },
+    {
+      "name": "Device Catalog Selection",
+      "kind": "custom",
+      "description": "A selected device in the compact catalog, with exact MQTT identity and qualified status.",
+      "html": "<a class=\"ds-device-row\" href=\"#device\"><strong>Имя устройства</strong><code>MQTT ID</code><span>Каналы не получены</span></a>",
+      "css": ".ds-device-row{display:grid;gap:6px;padding:15px 16px;border-top:1px solid var(--border-color,#e0e6df);background:color-mix(in srgb,var(--primary-color,#568d2d) 9%,var(--input-background,#fff));color:var(--text-color,#243029);font:400 13px/1.5 var(--font,Roboto,sans-serif);text-decoration:none;overflow-wrap:anywhere}.ds-device-row strong{font-weight:500}.ds-device-row code{padding:0;background:none;color:var(--gray-color,#67736b);font:400 11px SFMono-Regular,Consolas,\"Liberation Mono\",monospace}.ds-device-row span{color:var(--gray-color,#67736b);font-size:12px;line-height:1.45}.ds-device-row:hover{background:color-mix(in srgb,var(--primary-color,#568d2d) 5%,var(--input-background,#fff));color:var(--text-color,#243029)}.ds-device-row:focus-visible{outline:2px solid var(--primary-color,#568d2d);outline-offset:-3px}"
+    },
+    {
+      "name": "Technical Channel Disclosure",
+      "kind": "custom",
+      "description": "A keyboard-operable technical group kept below primary channel tasks.",
+      "html": "<details class=\"ds-channel-group\"><summary><h3>Счётчики и служебные каналы</h3></summary><p>Служебные сведения устройства</p></details>",
+      "css": ".ds-channel-group{color:var(--text-color,#243029);font:400 13px/1.5 var(--font,Roboto,sans-serif)}.ds-channel-group>summary{display:flex;align-items:center;gap:9px;padding:11px 0;cursor:pointer;list-style:none;border-bottom:1px solid var(--border-color,#e0e6df)}.ds-channel-group>summary::before{content:\"\";width:7px;height:7px;border-right:1px solid currentColor;border-bottom:1px solid currentColor;transform:rotate(-45deg);margin-right:3px}.ds-channel-group[open]>summary::before{transform:rotate(45deg)}.ds-channel-group h3{font-weight:500;font-size:14px;margin:0;line-height:1.5}.ds-channel-group>summary:focus-visible{outline:2px solid var(--primary-color,#568d2d);outline-offset:2px}.ds-channel-group>p{padding:11px 0;margin:0;color:var(--gray-color,#67736b)}@media(max-width:640px){.ds-channel-group h3{font-size:13px}}"
     }
   ],
   "narrative": {
@@ -545,6 +563,11 @@
       {
         "name": "The Theme Continuity Rule",
         "body": "New controls inherit the established semantic CSS variables and native state meanings.",
+        "section": "colors"
+      },
+      {
+        "name": "The Evidence in State Rule",
+        "body": "Distinguish interface connection, received channel errors, missing data and configuration conflicts in text. Missing channels, an empty journal or the absence of reported errors does not establish physical device health. Preserve these distinctions in labels and empty states.",
         "section": "colors"
       },
       {

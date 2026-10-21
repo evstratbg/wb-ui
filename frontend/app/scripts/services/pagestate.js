@@ -19,6 +19,10 @@ function pageStateService(
   $rootScope.$on('$translateChangeSuccess', () => updateTranslations());
 
   $transitions.onBefore({}, function (transition) {
+    // The installer workspace retains one draft while device/tab/query params change.
+    if (transition.from().name === 'devices' && transition.to().name === 'devices') {
+      return true;
+    }
     const serialConfigStates = ['serial-config.properties', 'serial-config.scan', 'serial-config'];
     if (
       serialConfigStates.includes(transition.from().name) &&

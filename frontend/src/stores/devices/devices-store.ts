@@ -219,7 +219,7 @@ export default class DevicesStore {
     if (!this.devices.has(id)) {
       return;
     }
-    if (!this.devices.get(id).explicit && !this.devices.get(id).cells.size) {
+    if (!this.devices.get(id).explicit && !this.devices.get(id).cells.size && !this.devices.get(id).error) {
       runInAction(() => this.devices.delete(id));
     }
   }
@@ -256,6 +256,17 @@ export default class DevicesStore {
     const cellTopicBase = `${deviceTopicBase}/controls/+`;
 
     return [
+      {
+        handledTopic: `${deviceTopicBase}/meta/error`,
+        handler: (message: string) => {
+          if (message) {
+            this.#getOrCreateDevice(deviceId).error = message;
+          } else if (this.devices.has(deviceId)) {
+            this.devices.get(deviceId).error = '';
+            this.#maybeRemoveDevice(deviceId);
+          }
+        },
+      },
       {
         handledTopic: `${deviceTopicBase}/meta`,
         handler: () => {

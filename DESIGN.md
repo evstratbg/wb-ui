@@ -132,6 +132,8 @@ This records the implemented fork of homeui v2.208.1-wb100. It is an independent
 
 Source: `frontend/src/components/navigation/concept-shell.css`, `frontend/app/styles/concept.css`, `frontend/src/pages/overview/styles.css`, and native component styles. Supplied desktop, mobile, device manager, SVG editor and chart screenshots confirm these patterns. Frontmatter records extracted values; source CSS custom properties remain the runtime authority.
 
+The installer Devices workspace extends this same system. Its catalog, device header, channel disclosures, settings, history and diagnostics are evidenced by `frontend/src/pages/devices/` and reuse native controls and editors.
+
 ## Colors
 
 Muted greens provide the action accent; green-tinted neutrals support longer technical tasks.
@@ -159,6 +161,8 @@ The `dark-*` tokens capture the implemented dark workspace. Use existing variabl
 
 **The Theme Continuity Rule.** New controls inherit the established semantic CSS variables and native state meanings.
 
+**The Evidence in State Rule.** Distinguish interface connection, received channel errors, missing data and configuration conflicts in text. Missing channels, an empty journal or the absence of reported errors does not establish physical device health. Preserve these distinctions in labels and empty states.
+
 ## Typography
 
 **Display and body font:** locally bundled Roboto, with sans-serif fallback. **Technical font:** the existing monospace stack for identifiers, logs and code.
@@ -180,6 +184,8 @@ At (768px) and below, navigation becomes a (64px) dark header with the original 
 The overview places a flexible main column beside a (300px) supporting column with a (24px) gap. It becomes one column at (980px); supporting cards briefly form two columns, then stack at (640px). Four telemetry cells become a two-by-two grid. Toolbars wrap, native form columns stack and editor panes retain their working space. Tables keep horizontal scrolling when their contents require it.
 
 Use the observed compact spacing rhythm for controls and the larger field/panel spacing for grouping. Preserve native widget sizing and editor-specific layouts rather than forcing every route into the overview grid.
+
+The Devices workspace uses a catalog beside the selected device: a (240px) catalog and flexible detail column with a (22px) gap. At (1200px) the catalog reduces to (205px) and the gap to (16px). At (1000px) and below, the selected device fills the width and the catalog/search toolbar is hidden until Back returns to the list. At (640px), catalog rows become compact stacked summaries, tabs remain horizontal, identity facts wrap and diagnostics facts become one column. Settings context and save actions stack at (767px). These are Devices-specific adaptations, not replacements for the shell or overview breakpoints.
 
 ## Elevation & Depth
 
@@ -224,6 +230,12 @@ Tables use tinted heading rows, fine dividers, muted headings and a subtle hover
 ### History chart
 
 A thin green trace, soft horizontal grid, readable axes, current reading, range controls and text summary. The plot fills available width; axis text remains at its fixed readable size. Units and minimum/maximum values stay distinct from labels. Preserve native loading, empty and error messages rather than drawing fabricated telemetry.
+
+### Device workspace and technical disclosure
+
+The catalog and detail panel use the existing panel radius, semantic surface variables and thin borders. Selection is a subtle primary-color tint; a visible outline remains distinct from selection. Names lead, MQTT identifiers use small muted technical text, and status combines words with a small dot. The device header persists above Channels, Settings, History and Diagnostics; Settings retains the native schema editor, labels, conditions and validation.
+
+Channel groups use keyboard-operable disclosures with a drawn chevron, compact heading, count and divider. Controls, inputs and measurements open first; counters and technical channels are initially collapsed and open when searching. Shared channel controls keep their native behavior. Immediate writes are explained beside the controls; configuration saving has a separate, explicit footer with whole-draft scope. Secondary diagnostic facts and maintenance actions remain subordinate without obscuring warnings.
 
 ## Do's and Don'ts
 

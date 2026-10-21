@@ -1,0 +1,60 @@
+.device-history {
+  min-width: 0;
+}
+
+.device-history-toolbar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px 24px;
+  margin-bottom: 24px;
+}
+
+.device-history-selector {
+  flex: 1 1 280px;
+  min-width: 0;
+  max-width: 560px;
+}
+
+.device-history-selector label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--text-color);
+  font-weight: 500;
+}
+
+.device-history-full {
+  margin-bottom: 10px;
+  color: var(--link-color);
+  text-underline-offset: 3px;
+}
+
+.device-history .overview-chart {
+  padding: 0;
+}
+
+.device-history .overview-chartEmpty,
+.device-history .overview-chartEmpty span,
+.device-history .overview-chartStatus {
+  color: var(--gray-color);
+}
+
+.device-history-empty {
+  max-width: 65ch;
+  margin: 0;
+  padding: 24px 0;
+  color: var(--gray-color);
+  line-height: 1.6;
+}
+
+@media (max-width: 640px) {
+  .device-history-selector {
+    flex-basis: 100%;
+    max-width: none;
+  }
+
+  .device-history-full {
+    margin-bottom: 0;
+  }
+}

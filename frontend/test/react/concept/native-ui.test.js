@@ -49,7 +49,7 @@ test('overview is a native route and all original editor routes remain available
   expect(routes.get('home').redirectTo).toBeUndefined();
   expect(routes.get('overview').template).toBe('<overview-page />');
   for (const route of ['serial-config', 'serial-config.properties', 'serial-config.scan', 'network-connections', 'configEdit', 'configs', 'rules-edit', 'rules-new', 'dashboard-svg-edit', 'history', 'system', 'webUI', 'accessLevel', 'logs', 'MQTTChannels', 'mbgate', 'dali', 'integrations-alice']) expect(routes.has(route)).toBe(true);
-  expect(routes.get('devices').url).toBe('/devices?search');
+  expect(routes.get('devices').url).toBe('/devices?search&device&tab&filter&channel');
   expect(routes.get('devices').params.search.dynamic).toBe(true);
 });
 
@@ -128,6 +128,7 @@ function renderOverview({ battery = '0', error = [], role = 'admin', language = 
     '@/components/dropdown': { Dropdown: () => null },
     '@/layouts/page': { PageLayout: ({ children, actions, title }) => React.createElement('main', null, title, actions, children) },
     './overview-history': { __esModule: true, default: () => null },
+    '@/pages/devices/device-model': loadSource('src/pages/devices/device-model.ts'),
   }, { localStorage: { getItem: () => null }, setTimeout, clearTimeout, AbortController });
   return renderToStaticMarkup(React.createElement(Overview, { devicesStore, historyProxy: {} }));
 }
