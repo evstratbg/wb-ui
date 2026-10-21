@@ -3,6 +3,7 @@ name: CI
 on:
   push:
     branches: [main]
+    tags: ['v*']
   pull_request:
   workflow_dispatch:
 
@@ -41,10 +42,43 @@ jobs:
         run: |
           for script in deploy/*.sh; do sh -n "$script"; done
           sh deploy/package-build.sh "$RUNNER_TEMP/wb-ui-static.tar.gz"
+          cd "$RUNNER_TEMP"
+          sha256sum wb-ui-static.tar.gz > SHA256SUMS
       - name: Upload installable build
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: wb-ui-static
-          path: ${{ runner.temp }}/wb-ui-static.tar.gz
+          path: |
+            ${{ runner.temp }}/wb-ui-static.tar.gz
+            ${{ runner.temp }}/SHA256SUMS
           if-no-files-found: error
           retention-days: 14
+
+  release:
+    name: Publish prebuilt UI
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: frontend
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+      - uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
+        with:
+          name: wb-ui-static
+          path: ${{ runner.temp }}/wb-ui-release
+      - name: Verify release archive
+        working-directory: ${{ runner.temp }}/wb-ui-release
+        run: sha256sum -c SHA256SUMS
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          gh release create "$RELEASE_TAG" \
+            "$RUNNER_TEMP/wb-ui-release/wb-ui-static.tar.gz" \
+            "$RUNNER_TEMP/wb-ui-release/SHA256SUMS" \
+            --verify-tag --prerelease --title "wb-ui $RELEASE_TAG" --notes-from-tag

@@ -89,7 +89,39 @@
 
 ## Установка
 
-Соберите на компьютере, затем загрузите статику на контроллер. В примере замените `wirenboard.local` на его имя или IP; нужен SSH-доступ `root`.
+Рекомендуемый способ — готовая сборка **[v0.1.0 · экспериментальный prerelease](https://github.com/evstratbg/wb-ui/releases/tag/v0.1.0)**: [архив UI](https://github.com/evstratbg/wb-ui/releases/download/v0.1.0/wb-ui-static.tar.gz) и [SHA256SUMS](https://github.com/evstratbg/wb-ui/releases/download/v0.1.0/SHA256SUMS). Файлы доступны публично без входа в GitHub; Node.js, npm и Git для установки не нужны.
+
+На компьютере подключитесь к контроллеру, заменив `wirenboard.local` на его имя или IP:
+
+```sh
+ssh root@wirenboard.local
+```
+
+Следующие команды выполните **на контроллере, в открытой SSH-сессии**. Контроллеру нужен доступ к GitHub. Архив проверяется по SHA-256 до распаковки и запуска установщика.
+
+```sh
+set -eu
+VERSION=v0.1.0
+mkdir -p /mnt/data/wb-ui-full-staging
+cd /mnt/data/wb-ui-full-staging
+
+RELEASE_URL="https://github.com/evstratbg/wb-ui/releases/download/$VERSION"
+curl --fail --location --retry 3 -o wb-ui-static.tar.gz \
+  "$RELEASE_URL/wb-ui-static.tar.gz"
+curl --fail --location --retry 3 -o SHA256SUMS \
+  "$RELEASE_URL/SHA256SUMS"
+
+sha256sum -c SHA256SUMS
+tar -xzf wb-ui-static.tar.gz
+sh install-on-device.sh "$PWD"
+```
+
+Если у контроллера нет интернета, [скачайте готовую сборку на компьютер и перенесите через SCP](deploy/README.md#если-контроллер-без-интернета).
+
+<details>
+<summary>Альтернатива: собрать из исходников на компьютере</summary>
+
+Нужны Git, Node.js 22, npm, SSH и SCP. Команды выполняются на компьютере:
 
 ```sh
 git clone https://github.com/evstratbg/wb-ui.git
@@ -109,6 +141,8 @@ scp -r frontend/dist deploy/wb-ui.conf deploy/install-on-device.sh deploy/remove
 ssh "root@${WB_HOST}" \
   'sh /mnt/data/wb-ui-full-staging/install-on-device.sh /mnt/data/wb-ui-full-staging'
 ```
+
+</details>
 
 Откройте `http://<controller>:8080/#!/overview`. Вход — существующей учётной записью WB. Корневой маршрут `/#!/` продолжает открывать настроенную домашнюю панель.
 
@@ -135,7 +169,7 @@ npm run build
 
 Для разработки настройте `MQTT_BROKER_URI` и адрес backend в webpack-конфиге под свой контроллер, затем запустите `npm start`. Dev-сервер использует реальные службы контроллера; это не изолированный симулятор. Подробности исходного проекта — в [upstream README](docs/UPSTREAM.md).
 
-Workflow CI настроен на тесты, production build и проверку синтаксиса deploy-скриптов. Артефакт `wb-ui-static` содержит сборку, установщик и лицензии; он не публикуется на контроллер автоматически. Результаты проверок каждой опубликованной ревизии доступны в [GitHub Actions](https://github.com/evstratbg/wb-ui/actions/workflows/ci.yml).
+Workflow CI выполняет тесты, production build и проверку синтаксиса deploy-скриптов. Для тегов `v*` после успешных проверок публикуются архив сборки и `SHA256SUMS` в GitHub Releases. Архив содержит установщик, nginx-конфиг, сведения о ревизии и лицензии. Публичные файлы релиза предназначены для установки; промежуточный Actions-артефакт `wb-ui-static` хранится 14 дней. Автоматической установки на контроллер нет. Результаты проверок каждой опубликованной ревизии доступны в [GitHub Actions](https://github.com/evstratbg/wb-ui/actions/workflows/ci.yml).
 
 Локально пройдены **114/114 тестов в 9 suites** и production build с двумя исходными предупреждениями о размере bundles. У `tsc --noEmit` остаются ровно те же 31 ошибка upstream, что и до изменений. Новая сборка установлена на WB7 на порту 8080: проверены все четыре вкладки устройства, реальные точки истории и журнал, сохранение черновика при переходах, отмена выхода и явная отмена черновика. На ширинах 1440, 544 и 390 px горизонтального переполнения нет. Конфигурация на контроллере не сохранялась, физические выходы не переключались, сканирование не запускалось; firmware, сеть и пользователи не изменялись. [Подробный объём проверки](README-UI-CONCEPT.md#проверка).
 
