@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { observer } from 'mobx-react-lite';
+import { uiStore } from '@/stores/ui';
 import { useTranslation } from 'react-i18next';
 import { PageLayout } from '@/layouts/page';
 import { authStore, UserRole } from '@/stores/auth';
@@ -8,7 +10,8 @@ import MqttSettings from './components/mqtt-settings';
 import type { WebUiSettingsPageProps } from './types';
 import './styles.css';
 
-const WebUiSettingsPage = ({ onChangeLanguage, dashboardsStore }: WebUiSettingsPageProps) => {
+const WebUiSettingsPage = observer(
+  ({ onChangeLanguage, dashboardsStore }: WebUiSettingsPageProps) => {
   const { t } = useTranslation();
   const [errors, setErrors] = useState([]);
 
@@ -23,12 +26,17 @@ const WebUiSettingsPage = ({ onChangeLanguage, dashboardsStore }: WebUiSettingsP
   return (
     <PageLayout title={t('web-ui-settings.title')} errors={errors} hasRights>
       <div className="web-ui-settings-pageContent">
-        {authStore.hasRights(UserRole.Operator) && <MqttSettings />}
+        {uiStore.workspaceMode === 'installer' && authStore.hasRights(UserRole.Operator) && (
+            <MqttSettings />
+          )}
         <CommonSettings dashboardsStore={dashboardsStore} onChangeLanguage={onChangeLanguage} />
-        {authStore.hasRights(UserRole.Admin) && <HttpsSettings onError={httpsErrorHandler} />}
+        {uiStore.workspaceMode === 'installer' && authStore.hasRights(UserRole.Admin) && (
+            <HttpsSettings onError={httpsErrorHandler} />
+          )}
       </div>
     </PageLayout>
   );
-};
+}
+);
 
 export default WebUiSettingsPage;

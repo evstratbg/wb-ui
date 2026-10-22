@@ -26,22 +26,20 @@ export default class DashboardsStore {
     this.isLoading = true;
     return this.#configEditorProxy.Load({ path: uiConfigPath })
       .then(({ content }: UIConfigResponse) => {
-        const { dashboards, widgets, defaultDashboardId, isShowWidgetsPage, description } = content;
-        return runInAction(() => {
-          this.isLoading = false;
-          dashboards.forEach((dashboard: DashboardBase) => {
-            this.dashboards.set(dashboard.id, new Dashboard(dashboard, this));
-          });
-          widgets.forEach((widget: WidgetBase) => {
-            this.widgets.set(widget.id, new Widget(widget, this));
-          });
-          this.defaultDashboardId = defaultDashboardId;
-          this.isShowWidgetsPage = !!isShowWidgetsPage;
-          this.description = description || '';
-
-          return content;
-        });
+        this.applyConfig(content);
+        return content;
       });
+  }
+
+  applyConfig(content: UIConfigResponse['content']) {
+            this.dashboards = new Map(
+      content.dashboards.map((dashboard) => [dashboard.id, new Dashboard(dashboard, this)])
+    );
+    this.widgets = new Map(content.widgets.map((widget) => [widget.id, new Widget(widget, this)]));
+          this.defaultDashboardId = content.defaultDashboardId;
+    this.description = content.description || '';
+          this.isShowWidgetsPage = !!content.isShowWidgetsPage;
+          this.isLoading = false;
   }
 
   async addDashboard(data: Dashboard) {
@@ -95,7 +93,8 @@ export default class DashboardsStore {
     return runInAction(() => {
       const id = generateNextId(Array.from(this.widgets.keys()), 'widget');
       const copiedWidget = this.widgets.get(widgetId);
-      this.widgets.set(id, new Widget({ ...copiedWidget, id, name: `${copiedWidget.name}_copy` }, this));
+      this.widgets.set(id, new Widget({ ...copiedWidget, id, name: `${copiedWidget.name}_copy` }, this)
+      );
       this._saveData();
       return id;
     });
@@ -158,7 +157,8 @@ export default class DashboardsStore {
       isShowWidgetsPage: this.isShowWidgetsPage,
     };
 
-    await this.#configEditorProxy.Save({ path: uiConfigPath, content })
+    await this.#configEditorProxy
+      .Save({ path: uiConfigPath, content })
       .then(() => {
         runInAction(() => {
           this.saveError = null;

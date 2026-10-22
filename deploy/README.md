@@ -15,7 +15,7 @@
 
 ## Готовая сборка — рекомендуемый способ
 
-Доступен **[v0.1.0 · экспериментальный prerelease](https://github.com/evstratbg/wb-ui/releases/tag/v0.1.0)**: [wb-ui-static.tar.gz](https://github.com/evstratbg/wb-ui/releases/download/v0.1.0/wb-ui-static.tar.gz) и [SHA256SUMS](https://github.com/evstratbg/wb-ui/releases/download/v0.1.0/SHA256SUMS). Публичные файлы релиза скачиваются без входа в GitHub. Архив содержит UI, установщик, nginx-конфиг, скрипт отключения, лицензии и `BUILD_INFO.txt` с ревизией исходников.
+Доступен **[v0.2.0 · экспериментальный prerelease](https://github.com/evstratbg/wb-ui/releases/tag/v0.2.0)**: [wb-ui-static.tar.gz](https://github.com/evstratbg/wb-ui/releases/download/v0.2.0/wb-ui-static.tar.gz) и [SHA256SUMS](https://github.com/evstratbg/wb-ui/releases/download/v0.2.0/SHA256SUMS). Публичные файлы релиза скачиваются без входа в GitHub. Архив содержит UI, установщик, nginx-конфиг, скрипт отключения, лицензии и `BUILD_INFO.txt` с ревизией исходников.
 
 На компьютере откройте SSH-сессию:
 
@@ -27,7 +27,7 @@ ssh root@wirenboard.local
 
 ```sh
 set -eu
-VERSION=v0.1.0
+VERSION=v0.2.0
 mkdir -p /mnt/data/wb-ui-full-staging
 cd /mnt/data/wb-ui-full-staging
 
@@ -50,7 +50,7 @@ sh install-on-device.sh "$PWD"
 
 ```sh
 set -eu
-VERSION=v0.1.0
+VERSION=v0.2.0
 mkdir -p "wb-ui-$VERSION"
 cd "wb-ui-$VERSION"
 

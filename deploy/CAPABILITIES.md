@@ -14,16 +14,18 @@ Live browser checks covered all four device tabs at widths 1440, 544 and 390 px 
 | Login/logout | `/login` | Native login form and same-host session reuse; verify a session in a separate browser context. |
 | Device catalog/workspace | `/devices?search=&device=&tab=&filter=&channel=` | Search, filters, exact MQTT ID, port/address for admin, configured devices without runtime channels, and duplicate/unmatched IDs render honestly. Search, device, tab, filter and history channel survive direct links, reload and Back. Leave switches, ranges and buttons unchanged. |
 | Grouped device channels | `/devices?device=<mqtt-id>` | Writable controls appear first, then inputs/measurements; technical channels start collapsed. In-device search and channel history links work. Grouping uses channel types, write access and names; no native group metadata exists. |
+| Channel polling | Device channel row → Polling | Admin-only exact template match; native mode/period constraints, shared draft and full-config diff before explicit serial Save. No register reads on opening. |
 | Device settings | `/devices?device=<mqtt-id>&tab=settings` | Admin gets the uniquely matched serial schema, port/address, validation and draft state. Operator must not load port configuration or receive settings/firmware details. Open/read-only inspection must not read physical registers, save, discard a working draft or start a firmware update. |
 | Device history | `/devices?device=<mqtt-id>&tab=history&channel=<cell-id>` | Only the chosen device's channels appear; numeric/boolean history loads through native HistoryProxy. Channel links preserve context; full native history remains available for comparison/export. |
 | Device diagnostics | `/devices?device=<mqtt-id>&tab=diagnostics` | Device-level and channel errors render. Port/address and already received firmware/bootloader versions are admin-only. Journal loads on explicit request: up to 20 literal MQTT ID matches or unfiltered driver entries, clearly labelled. No physical last-response time is claimed. |
-| Text dashboard list/editor | `/dashboards` | Existing panels, add/edit dialog, default/ordering controls render. Cancel without saving. |
-| Text dashboard | `/dashboards/dashboard1` | Original widgets, channel labels, readonly/inversion settings, live readings and edit dialog render. Cancel edits. |
+| Text dashboard list/editor | `/dashboards`, `/panel-editor?panel=<id>` | Installer enters a draft builder: channels, ordering, inert preview and whole-config review. Explicit save/discard; shared widget copy/all scope. Home hides editing. SVG retains native tools. |
+| My home | `/home` | Owner controls from configured panels; local favorites/labels/order; read-only metadata preserved, commands blocked offline. Workspace switch never changes role. |
+| Text dashboard | `/dashboards/dashboard1` | Original widgets, channel labels, readonly/inversion settings, live readings and draft-builder entry render. Home hides editing; controls are blocked offline. |
 | Widgets editor | `/dashboards/widgets` | Existing widgets and cell selection/edit dialogs render. Cancel add/edit/delete. |
 | SVG dashboard | `/dashboards/svg/view/dashboard2` | Existing SVG renders inside the page, read/style/visibility bindings update; do not click actuator-bound SVG objects. |
 | SVG create | `/dashboards/svg/add` | Native upload/create dialog and editor are available; leave without saving. |
 | SVG edit | `/dashboards/svg/edit/dashboard2` | Existing SVG, visual bindings editor, code editor, element selection and preview render. Cancel without saving. |
-| History | `/history` and `/history/<sample>` | Existing channels, dates, multiple series, zoom/range and real historical data load. |
+| History | `/history` and `/history/<sample>` | Single channel search, immediate multi-series load, separate unit/type scales, active quick periods and visible range, URL restoration, cancellation, collapsed table and data CSV. |
 | Configuration list | `/configs` | Native configuration schema list loads from confed. |
 | Configuration editor | `/configs/edit/<encoded-schema-path>` | Existing schema values, groups, conditional parameters and validation render; do not save. |
 | Serial/Modbus devices | `/serial-config` | Ports and existing modules, device/channel configuration, firmware information and editor tabs load. |
@@ -31,11 +33,11 @@ Live browser checks covered all four device tabs at widths 1440, 544 and 390 px 
 | Serial discovery | `/serial-config/scan` | Capability exists in the router and native scan components. Do not trigger discovery during read-only smoke. |
 | Network connections | `/network-connections` | Existing interface status and native edit dialog load; do not toggle, activate, save or delete connections. |
 | Rules list | `/rules` | Native list, status and console controls render; do not enable/disable rules. |
-| Rule editor | `/rules/edit/<rule-path>` | Open an existing rule and inspect source/console inside the replacement; leave without saving. |
+| Rule editor | `/rules/edit/<rule-path>` | Source and diagnostic column: exact diagnostic source snapshot, line navigation only for matching editor text, traceback, live WB Rules messages and explicit latest-20 journal load. Leave without saving. |
 | New rule | `/rules/new` | Native code editor and fields render; cancel without creating. |
 | Logs | `/logs` | Service list, existing journal entries, date/severity/search filters load. |
 | System/maintenance | `/system` | Cloud status, installed firmware information, native upload/update/reset and backup/diagnostic controls render. Do not upload firmware, reset, generate backup/diagnostics or reboot. |
-| Web UI settings | `/web-ui` | Language/theme/system-device visibility, MQTT settings and common dashboard settings are present; inspect without saving. |
+| Web UI settings | `/web-ui` | Home exposes browser language only; Installer retains native system-device visibility, MQTT/HTTPS and dashboard settings within role. Applying Home language must not save config. |
 | MQTT channels | `/MQTTChannels` | Topic/channel metadata, values and filter tools load; do not publish or delete retained values. |
 | Users/access | `/access-level` | Existing user list, roles, password/user dialogs and HTTPS settings render; cancel all changes. |
 | Modbus gateway | `/mbgate` | Existing gateway configuration and mapping editor render; do not save. |
@@ -47,7 +49,7 @@ Live browser checks covered all four device tabs at widths 1440, 544 and 390 px 
 | HMI/fullscreen | Existing dashboard routes with `hmi`, `hmicolor`, `fullscreen` parameters | Native layout modes render on the same port without losing dashboard parameters. |
 | Shared assets | `/uploads/`, `/diag/`, `/images/` | Existing server assets resolve through the proxy; do not generate diagnostic archives solely to test delivery. |
 
-Router aliases `/scan` and `/widgets` redirect to the native serial configuration and widget routes. The exact installed bundle exposes 31 ui-router states, including aliases, nested properties/scan states and history samples.
+Router aliases `/scan` and `/widgets` redirect to the native serial configuration and widget routes. The fork adds living and panel-builder states to the 31 upstream ui-router states, including aliases, nested properties/scan states and history samples.
 
 Device routes use dynamic query parameters and retain one serial-configuration draft across device/tab changes. No autosave occurs; reload does not restore the draft. Save uses the native schema/validation and writes the entire `wb-mqtt-serial` configuration, including other devices' edits. Discard reloads and drops the complete draft. A pre-save reload rejects changes made since the baseline, but the backend has no atomic compare-and-swap and a check/write race remains. Register reads require a separate confirmed action; the full native port editor remains at `/serial-config`.
 

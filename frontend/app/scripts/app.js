@@ -56,7 +56,7 @@ import BackupCtrl from './controllers/backupController';
 import userRolesDirective from './directives/user-roles.directive';
 import onResizeDirective from './directives/resize';
 import navigationDirective from '~/react-directives/navigation/navigation';
-import overviewDirective from '~/react-directives/overview/overview';
+import overviewDirective, { livingDirective } from '~/react-directives/overview/overview';
 import rulesConsoleDirective from '~/react-directives/rules-console/rules-console';
 import expCheckMetaDirective from './react-directives/exp-check/exp-check';
 import loginPageDirective from './react-directives/login/login';
@@ -156,6 +156,7 @@ module
   .directive('expCheckWidget', expCheckMetaDirective)
   .directive('navigation', navigationDirective)
   .directive('overviewPage', overviewDirective)
+  .directive('livingPage', livingDirective)
   .directive('skipToMainContent', skipToMainContentDirective)
   .directive('rulesConsole', rulesConsoleDirective)
   .directive('loginPage', loginPageDirective);

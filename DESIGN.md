@@ -132,7 +132,7 @@ This records the implemented fork of homeui v2.208.1-wb100. It is an independent
 
 Source: `frontend/src/components/navigation/concept-shell.css`, `frontend/app/styles/concept.css`, `frontend/src/pages/overview/styles.css`, and native component styles. Supplied desktop, mobile, device manager, SVG editor and chart screenshots confirm these patterns. Frontmatter records extracted values; source CSS custom properties remain the runtime authority.
 
-The installer Devices workspace extends this same system. Its catalog, device header, channel disclosures, settings, history and diagnostics are evidenced by `frontend/src/pages/devices/` and reuse native controls and editors.
+The installer Devices workspace extends this same system. Its catalog, device header, channel disclosures, settings, history and diagnostics are evidenced by `frontend/src/pages/devices/` and reuse native controls and editors. The implemented My home, panel builder, polling, history and rule diagnostics extend Operate with the same semantic theme, controls and spacing. Their source lives in the corresponding `frontend/src/pages/` routes and shared configuration-change component; the final desktop and narrow-width captures are in `.impeccable/review/v02/`.
 
 ## Colors
 
@@ -187,6 +187,10 @@ Use the observed compact spacing rhythm for controls and the larger field/panel 
 
 The Devices workspace uses a catalog beside the selected device: a (240px) catalog and flexible detail column with a (22px) gap. At (1200px) the catalog reduces to (205px) and the gap to (16px). At (1000px) and below, the selected device fills the width and the catalog/search toolbar is hidden until Back returns to the list. At (640px), catalog rows become compact stacked summaries, tabs remain horizontal, identity facts wrap and diagnostics facts become one column. Settings context and save actions stack at (767px). These are Devices-specific adaptations, not replacements for the shell or overview breakpoints.
 
+Home favorites and panel preview use two equal flexible columns, with a (28px) gap, within a workspace capped at (1180px). Both become one column at (640px); Home favorite editing controls and panel actions wrap instead of squeezing their text. Home uses divided rows rather than an extra card around every control.
+
+The rule editor places a flexible code pane beside a (340px) diagnostics column with a (24px) gap and left divider. At (1100px) and below, diagnostics follows the editor with a top divider. Keep code editing space intact and wrap diagnostic text. Configuration-change tables retain horizontal scrolling; journal lists have a bounded (260px) scroll region.
+
 ## Elevation & Depth
 
 Borders and tonal layers do most of the structural work. Native cards have an almost imperceptible resting shadow (`0 2px 3px #24302903`); overview panels are flat. Selected segments use a small lift (`0 1px 3px #24311a15`). Menus use `0 8px 28px #24302914`; schema popovers use `0 10px 32px #2430291a`; dialogs use `0 18px 70px #15210c33` above a dark translucent overlay.
@@ -219,6 +223,8 @@ Dark shell, pale text and restrained icons. Selected rows use the green-tinted d
 
 Horizontal content tabs use a two-pixel green underline; vertical tabs and trees use a tinted selected surface. Preserve selection and validation state independently.
 
+The My home / Installer workspace switch is an outlined segmented group beside the breadcrumb in the desktop context bar. On mobile it moves inside the navigation drawer, where it inherits the dark shell colors and uses larger padding. Use actual pressed state for the active workspace. Mode changes the visible workspace and remains a browser preference; preserve the existing role-gated Installer option.
+
 ### Tags and segmented controls
 
 Model tags are small outlined rectangles, with muted text and a small radius. Segmented chart controls sit in a tinted outlined track with a control radius; a selected segment uses a white surface, green text and the small selection shadow. Keep real pressed state and keyboard focus visible.
@@ -231,11 +237,30 @@ Tables use tinted heading rows, fine dividers, muted headings and a subtle hover
 
 A thin green trace, soft horizontal grid, readable axes, current reading, range controls and text summary. The plot fills available width; axis text remains at its fixed readable size. Units and minimum/maximum values stay distinct from labels. Preserve native loading, empty and error messages rather than drawing fabricated telemetry.
 
+The full History workspace adds channels as removable selections, compares different units on separate scales, and keeps quick periods visible above the chart. The active recent preset uses a filled primary button and pressed state. Show the exact start/end timestamps and browser time zone directly below the presets, including when custom dates are collapsed. Custom dates and the data table use disclosures; retain reload/cancel state, reproducible URL selection and data CSV alongside honest loading, empty and error messages.
+
 ### Device workspace and technical disclosure
 
 The catalog and detail panel use the existing panel radius, semantic surface variables and thin borders. Selection is a subtle primary-color tint; a visible outline remains distinct from selection. Names lead, MQTT identifiers use small muted technical text, and status combines words with a small dot. The device header persists above Channels, Settings, History and Diagnostics; Settings retains the native schema editor, labels, conditions and validation.
 
 Channel groups use keyboard-operable disclosures with a drawn chevron, compact heading, count and divider. Controls, inputs and measurements open first; counters and technical channels are initially collapsed and open when searching. Shared channel controls keep their native behavior. Immediate writes are explained beside the controls; configuration saving has a separate, explicit footer with whole-draft scope. Secondary diagnostic facts and maintenance actions remain subordinate without obscuring warnings.
+
+
+### Home favorites
+
+Everyday controls reuse native channel components in divided rows, with the configured panel name above each item. Custom labels and ordering are local to this browser and edited as a separate selection draft. Keep unavailable-channel text visible. Explain immediate writes beside the controls; when disconnected, block command controls. Panel links remain a separate list with names and a quiet directional icon.
+
+### Panel draft and preview
+
+The text-panel builder keeps Channels, Layout, Preview and Changes as native content tabs. A name field and concise scope explanation lead; the sticky footer carries unsaved state, Discard and exit, and Save panel. Preview shows live readings in bordered widget containers with no command controls. Shared-widget editing defaults to a copy for the current panel and exposes the explicit every-panel scope. Changes uses the shared whole-configuration review before explicit save; failed or stale saves keep the draft visible. Preserve native SVG tools separately.
+
+### Polling and configuration review
+
+The polling dialog identifies the exact MQTT channel, port and address before the native mode/period fields. Validation, unsupported-channel and disconnected states stay adjacent to those fields. Review changes precedes Save entire configuration: the shared draft belongs to the whole wb-mqtt-serial configuration. The shared review table has Parameter, Before and After columns, wrapping technical paths and explicit unset values. Keep this whole-configuration scope visible in the dialog and panel builder rather than implying a row-only save.
+
+### Rule diagnostics and source context
+
+Diagnostics sits beside the native editor on wide screens and follows it at narrower widths. Error text, source provenance, line action and a short numbered source excerpt precede the collapsible traceback. Distinguish controller-loaded code from submitted code whose persistence is unconfirmed. Preserve the exact error-source excerpt when the current draft changes; disable the line jump and explain the mismatch when those sources differ. Live messages and explicitly loaded journal entries remain separate, bounded lists. The file/all-rules selector names the log scope, and missing matches do not imply successful execution.
 
 ## Do's and Don'ts
 
@@ -246,6 +271,8 @@ Channel groups use keyboard-operable disclosures with a drawn chevron, compact h
 - **Do** retain visible focus, validation, disabled and connection states.
 - **Do** keep readings tabular, units subordinate and chart axes readable on mobile.
 - **Do** wrap toolbars and stack forms while preserving editor and table usability.
+- **Do** keep draft, review, preview and persisted state explicit beside their actions.
+- **Do** show history range, time zone and error-source provenance without requiring an extra disclosure.
 
 ### Don't:
 
@@ -254,3 +281,4 @@ Channel groups use keyboard-operable disclosures with a drawn chevron, compact h
 - **Don't** hardcode light colors where existing semantic theme variables apply.
 - **Don't** shrink chart labels with the plot or remove native status/error information.
 - **Don't** add decorative elevation or motion absent from the implemented system.
+- **Don't** put command controls in the panel preview or imply a failed rule submission was saved.

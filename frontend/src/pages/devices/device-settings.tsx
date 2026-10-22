@@ -1,32 +1,30 @@
-import { observer } from "mobx-react-lite";
-import { useEffect, useState, type SyntheticEvent } from "react";
-import { useTranslation } from "react-i18next";
-import { Alert } from "@/components/alert";
-import { Button } from "@/components/button";
-import { Confirm } from "@/components/confirm";
-import { OptionalParamsSelectDialog } from "@/components/json-schema-editor/optional-params-select-dialog";
-import { Loader } from "@/components/loader";
-import { DeviceSettingsEditor } from "@/pages/settings/device-manager/components/device-settings-editor";
-import { ReadRegistersState } from "@/stores/device-manager";
-import { uiStore } from "@/stores/ui";
-import type DeviceInstallerStore from "~/react-directives/devices/device-installer-store";
-import "./device-settings.css";
+import { observer } from 'mobx-react-lite';
+import { useEffect, useState, type SyntheticEvent } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Alert } from '@/components/alert';
+import { Button } from '@/components/button';
+import { ConfigurationChanges } from '@/components/configuration-changes/configuration-changes';
+import { Confirm } from '@/components/confirm';
+import { OptionalParamsSelectDialog } from '@/components/json-schema-editor/optional-params-select-dialog';
+import { Loader } from '@/components/loader';
+import { DeviceSettingsEditor } from '@/pages/settings/device-manager/components/device-settings-editor';
+import { ReadRegistersState } from '@/stores/device-manager';
+import { uiStore } from '@/stores/ui';
+import type DeviceInstallerStore from '~/react-directives/devices/device-installer-store';
+import './device-settings.css';
 
 export const DeviceSettings = observer(
   ({
     installer,
-    deviceId,
-  }: {
+    deviceId }: {
     installer?: DeviceInstallerStore;
-    deviceId: string;
-  }) => {
+    deviceId: string }) => {
     const { t, i18n } = useTranslation();
-    const [dialog, setDialog] = useState<
-      "parameters" | "discard" | "read" | null
+    const [dialog, setDialog] = useState<'parameters' | 'discard' | 'read' | 'save' | null
     >(null);
     const text = (key: string, ru: string, en: string) =>
       t(`devices.installerSettings.${key}`, {
-        defaultValue: i18n.language.startsWith("ru") ? ru : en,
+        defaultValue: i18n.language.startsWith('ru') ? ru : en,
       });
     const loaded = installer?.loaded;
     const isEditingDisabled = installer?.isSaving || !uiStore.isConnected;
@@ -35,7 +33,7 @@ export const DeviceSettings = observer(
     const preventUnavailableEdit = (event: SyntheticEvent) => {
       if (installer?.isSaving || !uiStore.isConnected) {
         // Let Tab move focus, without allowing react-select to commit an option.
-        if (!("key" in event && event.key === "Tab")) event.preventDefault();
+        if (!('key' in event && event.key === 'Tab')) event.preventDefault();
         event.stopPropagation();
       }
     };
@@ -48,9 +46,9 @@ export const DeviceSettings = observer(
       return (
         <Alert variant="info">
           {text(
-            "adminOnly",
-            "Настройки устройства доступны администратору.",
-            "Device settings are available to administrators.",
+            'adminOnly',
+            'Настройки устройства доступны администратору.',
+            'Device settings are available to administrators.'
           )}
         </Alert>
       );
@@ -59,7 +57,7 @@ export const DeviceSettings = observer(
       return (
         <div className="installerSettings-loading" role="status">
           <Loader />
-          {text("loading", "Загрузка конфигурации…", "Loading configuration…")}
+          {text('loading', 'Загрузка конфигурации…', 'Loading configuration…')}
         </div>
       );
     }
@@ -72,9 +70,9 @@ export const DeviceSettings = observer(
           {matches.length > 1 ? (
             <Alert variant="warn">
               {text(
-                "ambiguous",
-                "Один MQTT ID задан нескольким устройствам. Однозначно открыть настройки нельзя:",
-                "More than one configured device has this MQTT ID. Settings cannot be selected safely:",
+                'ambiguous',
+                'Один MQTT ID задан нескольким устройствам. Однозначно открыть настройки нельзя:',
+                'More than one configured device has this MQTT ID. Settings cannot be selected safely:'
               )}
               <ul>
                 {matches.map(({ port, tab }, index) => (
@@ -87,9 +85,9 @@ export const DeviceSettings = observer(
           ) : (
             <Alert variant="info">
               {text(
-                "noConfig",
-                "У этого MQTT-устройства нет отдельной настройки в wb-mqtt-serial. Его каналы, история и диагностика доступны в соседних вкладках.",
-                "This MQTT device has no separate wb-mqtt-serial configuration. Its channels, history and diagnostics are available in the other tabs.",
+                'noConfig',
+                'У этого MQTT-устройства нет отдельной настройки в wb-mqtt-serial. Его каналы, история и диагностика доступны в соседних вкладках.',
+                'This MQTT device has no separate wb-mqtt-serial configuration. Its channels, history and diagnostics are available in the other tabs.'
               )}
             </Alert>
           )}
@@ -97,7 +95,7 @@ export const DeviceSettings = observer(
             <Button
               variant="secondary"
               onClick={() => installer.reload()}
-              label={text("retry", "Повторить загрузку", "Retry loading")}
+              label={text('retry', 'Повторить загрузку', 'Retry loading')}
             />
           )}
         </div>
@@ -110,7 +108,7 @@ export const DeviceSettings = observer(
       !tab.isUnknownType &&
       !tab.withSubdevices &&
       ![ReadRegistersState.Unsupported, ReadRegistersState.Disabled].includes(
-        tab.readRegistersState.state,
+        tab.readRegistersState.state
       );
     return (
       <div
@@ -124,45 +122,39 @@ export const DeviceSettings = observer(
           <div>
             <strong>{match.typeName}</strong>
             <span>
-              {match.portPath || match.portName} ·{" "}
-              {text("address", "Адрес", "Address")} {match.address ?? "—"}
+              {match.portPath || match.portName} · {text('address', 'Адрес', 'Address')}{' '}
+              {match.address ?? '—'}
             </span>
           </div>
           <span>
             {text(
-              "source",
-              "Параметры из конфигурации контроллера",
-              "Parameters from the controller configuration",
+              'source',
+              'Параметры из конфигурации контроллера',
+              'Parameters from the controller configuration'
             )}
           </span>
         </div>
         {installer.error && <Alert variant="danger">{installer.error}</Alert>}
         {installer.saved && !installer.isDirty && (
           <Alert variant="success" role="status">
-            {text("saved", "Конфигурация сохранена.", "Configuration saved.")}
+            {text('saved', 'Конфигурация сохранена.', 'Configuration saved.')}
           </Alert>
         )}
         {tab.error && <Alert variant="danger">{tab.error}</Alert>}
         {tab.slaveIdIsDuplicate && (
-          <Alert variant="danger">
-            {t("device-manager.errors.duplicate-slave-id")}
-          </Alert>
+          <Alert variant="danger">{t('device-manager.errors.duplicate-slave-id')}</Alert>
         )}
         {!!tab.devicesWithTheSameId.length && (
           <Alert variant="danger">
-            {t("device-manager.errors.duplicate-mqtt-topic", {
-              device: tab.devicesWithTheSameId.join(", "),
+            {t('device-manager.errors.duplicate-mqtt-topic', {
+              device: tab.devicesWithTheSameId.join(', '),
               interpolation: { escapeValue: false },
             })}
           </Alert>
         )}
         {tab.readRegistersState.errorMessage && (
           <Alert
-            variant={
-              tab.readRegistersState.state === ReadRegistersState.Error
-                ? "danger"
-                : "warn"
-            }
+            variant={tab.readRegistersState.state === ReadRegistersState.Error ? 'danger' : 'warn'}
           >
             {tab.readRegistersState.errorMessage}
           </Alert>
@@ -170,9 +162,9 @@ export const DeviceSettings = observer(
         {!match.enabled && (
           <Alert variant="info">
             {text(
-              "disabled",
-              "Устройство или его порт отключены в конфигурации. Чтение параметров из устройства недоступно.",
-              "The device or its port is disabled in the configuration. Reading device parameters is unavailable.",
+              'disabled',
+              'Устройство или его порт отключены в конфигурации. Чтение параметров из устройства недоступно.',
+              'The device or its port is disabled in the configuration. Reading device parameters is unavailable.'
             )}
           </Alert>
         )}
@@ -180,32 +172,32 @@ export const DeviceSettings = observer(
           {schema && (
             <Button
               variant="secondary"
-              label={t("device-manager.buttons.parameters")}
+              label={t('device-manager.buttons.parameters')}
               aria-haspopup="dialog"
               disabled={tab.isLoading || installer.isSaving}
-              onClick={() => setDialog("parameters")}
+              onClick={() => setDialog('parameters')}
             />
           )}
           {canReadRegisters && (
             <Button
               variant="secondary"
               label={text(
-                "read",
-                "Прочитать параметры из устройства",
-                "Read parameters from device",
+                'read',
+                'Прочитать параметры из устройства',
+                'Read parameters from device'
               )}
               aria-haspopup="dialog"
               disabled={tab.isLoading || tab.isDirty || installer.isSaving}
-              onClick={() => setDialog("read")}
+              onClick={() => setDialog('read')}
             />
           )}
         </div>
         {canReadRegisters && tab.isDirty && (
           <p className="installerSettings-readHint">
             {text(
-              "readDirty",
-              "Перед чтением параметров сохраните или отмените изменения этого устройства.",
-              "Save or discard this device’s changes before reading parameters.",
+              'readDirty',
+              'Перед чтением параметров сохраните или отмените изменения этого устройства.',
+              'Save or discard this device’s changes before reading parameters.'
             )}
           </p>
         )}
@@ -220,55 +212,46 @@ export const DeviceSettings = observer(
             disabled={isEditingDisabled}
             aria-busy={installer.isSaving}
           >
-            <DeviceSettingsEditor
-              store={schema}
-              translator={schema.schemaTranslator}
-            />
+            <DeviceSettingsEditor store={schema} translator={schema.schemaTranslator} />
           </fieldset>
         ) : (
           <>
             <Alert variant="warn">
               {tab.isUnknownType
-                ? t("device-manager.errors.unknown-device-type", {
+                ? t('device-manager.errors.unknown-device-type', {
                     type: tab.deviceType,
                   })
                 : tab.withSubdevices
-                  ? t("device-manager.errors.with-subdevices")
+                  ? t('device-manager.errors.with-subdevices')
                   : text(
-                      "unavailable",
-                      "Редактор параметров недоступен для этого шаблона.",
-                      "The parameter editor is unavailable for this template.",
+                      'unavailable',
+                      'Редактор параметров недоступен для этого шаблона.',
+                      'The parameter editor is unavailable for this template.'
                     )}
             </Alert>
-            <pre className="installerSettings-json">
-              {JSON.stringify(tab.editedData, null, 2)}
-            </pre>
+            <pre className="installerSettings-json">{JSON.stringify(tab.editedData, null, 2)}</pre>
           </>
         )}
         <div className="installerSettings-savebar">
           <div>
             <strong>
               {installer.isDirty
-                ? text(
-                    "unsaved",
-                    "Есть несохранённые изменения",
-                    "There are unsaved changes",
-                  )
-                : text("unchanged", "Изменений нет", "No changes")}
+                ? text('unsaved', 'Есть несохранённые изменения', 'There are unsaved changes')
+                : text('unchanged', 'Изменений нет', 'No changes')}
             </strong>
             <span>
               {text(
-                "saveHint",
-                "Сохранение применяет черновик конфигурации wb-mqtt-serial. Изменения в других устройствах также сохранятся.",
-                "Save applies the wb-mqtt-serial configuration draft, including changes to other devices.",
+                'saveHint',
+                'Сохранение применяет черновик конфигурации wb-mqtt-serial. Изменения в других устройствах также сохранятся.',
+                'Save applies the wb-mqtt-serial configuration draft, including changes to other devices.'
               )}
             </span>
             {installer.editor?.tabs.hasInvalidConfig && (
               <span className="installerSettings-invalid" role="status">
                 {text(
-                  "invalid",
-                  "Исправьте ошибки конфигурации перед сохранением.",
-                  "Fix configuration errors before saving.",
+                  'invalid',
+                  'Исправьте ошибки конфигурации перед сохранением.',
+                  'Fix configuration errors before saving.'
                 )}
               </span>
             )}
@@ -276,37 +259,69 @@ export const DeviceSettings = observer(
           <div className="installerSettings-saveActions">
             <Button
               variant="secondary"
-              label={text("discard", "Отменить изменения", "Discard changes")}
-              disabled={
-                !installer.isDirty || installer.isSaving || tab.isLoading
-              }
+              label={text('discard', 'Отменить изменения', 'Discard changes')}
+              disabled={!installer.isDirty || installer.isSaving || tab.isLoading}
               aria-haspopup="dialog"
-              onClick={() => setDialog("discard")}
+              onClick={() => setDialog('discard')}
             />
             <Button
-              label={t("device-manager.buttons.save")}
+              label={t('device-manager.buttons.save')}
               disabled={!installer.allowSave || tab.isLoading}
               isLoading={installer.isSaving}
-              onClick={() => installer.save()}
+              onClick={() => setDialog('save')}
             />
           </div>
         </div>
+        {installer.isDirty && (
+          <details>
+            <summary>
+              {text(
+                'changes',
+                'Посмотреть все изменения конфигурации',
+                'Review all configuration changes'
+              )}
+            </summary>
+            <ConfigurationChanges changes={installer.pendingChanges || []} />
+          </details>
+        )}
+        <Confirm
+          isOpened={dialog === 'save'}
+          heading={text('saveAll', 'Сохранить всю конфигурацию?', 'Save the entire configuration?')}
+          acceptLabel={text('saveAllAccept', 'Сохранить всё', 'Save all')}
+          isDisabled={!installer.allowSave || !uiStore.isConnected}
+          isLoading={installer.isSaving}
+          closeCallback={() => setDialog(null)}
+          confirmCallback={async () => {
+            setDialog(null);
+            await installer.save();
+          }}
+        >
+          <p>
+            {text(
+              'scope',
+              'Будут применены все изменения wb-mqtt-serial, включая другие устройства. Перед записью проверяется, не изменена ли конфигурация в другом окне.',
+              'All wb-mqtt-serial changes will be applied, including other devices. A stale-configuration check runs before writing.'
+            )}
+          </p>
+          {installer.error && <Alert variant="danger">{installer.error}</Alert>}
+          <ConfigurationChanges changes={installer.pendingChanges || []} />
+        </Confirm>
         {schema && (
           <OptionalParamsSelectDialog
-            isOpened={dialog === "parameters"}
+            isOpened={dialog === 'parameters'}
             store={schema.commonParams}
             translator={schema.schemaTranslator}
             onClose={() => setDialog(null)}
           />
         )}
         <Confirm
-          isOpened={dialog === "discard"}
+          isOpened={dialog === 'discard'}
           heading={text(
-            "discardTitle",
-            "Отменить все изменения конфигурации?",
-            "Discard all configuration changes?",
+            'discardTitle',
+            'Отменить все изменения конфигурации?',
+            'Discard all configuration changes?'
           )}
-          acceptLabel={text("discard", "Отменить изменения", "Discard changes")}
+          acceptLabel={text('discard', 'Отменить изменения', 'Discard changes')}
           closeCallback={() => setDialog(null)}
           confirmCallback={async () => {
             setDialog(null);
@@ -314,19 +329,19 @@ export const DeviceSettings = observer(
           }}
         >
           {text(
-            "discardHint",
-            "Будет загружена текущая конфигурация контроллера. Несохранённые изменения всех устройств будут потеряны.",
-            "The current controller configuration will be loaded. Unsaved changes to every device will be lost.",
+            'discardHint',
+            'Будет загружена текущая конфигурация контроллера. Несохранённые изменения всех устройств будут потеряны.',
+            'The current controller configuration will be loaded. Unsaved changes to every device will be lost.'
           )}
         </Confirm>
         <Confirm
-          isOpened={dialog === "read"}
+          isOpened={dialog === 'read'}
           heading={text(
-            "readTitle",
-            "Прочитать параметры из устройства?",
-            "Read parameters from device?",
+            'readTitle',
+            'Прочитать параметры из устройства?',
+            'Read parameters from device?'
           )}
-          acceptLabel={text("readAccept", "Прочитать", "Read")}
+          acceptLabel={text('readAccept', 'Прочитать', 'Read')}
           closeCallback={() => setDialog(null)}
           confirmCallback={async () => {
             setDialog(null);
@@ -334,14 +349,14 @@ export const DeviceSettings = observer(
           }}
         >
           {text(
-            "readHint",
-            "Чтение обращается к устройству через его порт. Полученные значения появятся в черновике; запись конфигурации выполняется только кнопкой «Сохранить».",
-            "Reading accesses the device through its port. Values are loaded into the draft; configuration is written only when you press Save.",
+            'readHint',
+            'Чтение обращается к устройству через его порт. Полученные значения появятся в черновике; запись конфигурации выполняется только кнопкой «Сохранить».',
+            'Reading accesses the device through its port. Values are loaded into the draft; configuration is written only when you press Save.'
           )}
         </Confirm>
       </div>
     );
-  },
+  }
 );
 
 export default DeviceSettings;

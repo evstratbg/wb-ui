@@ -21,8 +21,7 @@
   gap: 24px;
   margin: 24px 0;
 
-
-  @media(max-width: 640px) {
+  @media (max-width: 640px) {
     flex-direction: column;
     align-items: flex-start;
     gap: 12px;
@@ -54,4 +53,79 @@
 
 .history-table {
   margin-top: 12px;
+}
+.history-workspace {
+  min-width: 0;
+}
+.history-hint {
+  color: var(--gray-color);
+  line-height: 1.6;
+  max-width: 75ch;
+  margin-bottom: 22px;
+}
+.history-selection {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0 24px;
+}
+.history-selection > div {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--background-accent-color);
+  border-radius: 7px;
+  padding: 4px 8px 4px 12px;
+}
+.history-periods {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.history-range {
+  color: var(--gray-color);
+  font-size: 12px;
+  line-height: 1.7;
+  margin: 14px 0 0;
+  overflow-wrap: anywhere;
+  font-variant-numeric: tabular-nums;
+}
+.history-customDates {
+  margin: 18px 0;
+}
+.history-customDates summary,
+.history-dataTable summary {
+  cursor: pointer;
+  font-weight: 500;
+  padding: 10px 0;
+}
+.history-customDates form {
+  display: flex;
+  align-items: end;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin: 15px 0;
+}
+.history-customDates label {
+  display: grid;
+  gap: 8px;
+  font-weight: 400;
+}
+.history-dataTable {
+  overflow: auto;
+  border-top: 1px solid var(--border-color);
+  margin-top: 24px;
+}
+.history-dataTable p,
+.history-empty {
+  color: var(--gray-color);
+  line-height: 1.6;
+}
+.history-empty {
+  padding: 40px 0;
+}
+.history-loadActions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
 }

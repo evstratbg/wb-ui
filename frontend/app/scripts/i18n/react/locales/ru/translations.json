@@ -75,6 +75,7 @@
    },
    "navigation": {
       "labels": {
+         "my-home": "Мой дом",
          "overview": "Обзор",
          "device-setup": "Устройства и порты",
          "network": "Сеть",

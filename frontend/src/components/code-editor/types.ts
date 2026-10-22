@@ -7,4 +7,7 @@ export interface CodeEditorProps {
   extensions: Extension[];
   onChange: (_val: string) => void;
   onSave?: () => void;
+  isReadOnly?: boolean;
+  focusLine?: number;
+  focusRequest?: number;
 }

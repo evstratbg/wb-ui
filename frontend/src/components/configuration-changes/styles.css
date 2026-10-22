@@ -1,0 +1,28 @@
+.configuration-changes {
+  max-height: 340px;
+  overflow: auto;
+  margin: 14px 0;
+}
+.configuration-changes table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+.configuration-changes th,
+.configuration-changes td {
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--border-color);
+  padding: 10px;
+  overflow-wrap: anywhere;
+  min-width: 100px;
+}
+.configuration-changes th {
+  font-weight: 500;
+}
+.configuration-changes code {
+  background: none;
+  padding: 0;
+  color: var(--text-color);
+  white-space: normal;
+}

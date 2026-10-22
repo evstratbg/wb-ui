@@ -9,6 +9,10 @@ export default class RulesStore {
     initName: '',
   };
   public rules: RuleListItem[] = [];
+  public savedContent = '';
+  public savedName = '';
+  public errorSource: { content: string; origin: 'loaded' | 'submitted' } | null = null;
+  private loadId = 0;
   public isRuleDebugEnabled = false;
   public logs: RuleLog[] = [];
 
@@ -25,17 +29,29 @@ export default class RulesStore {
     makeAutoObservable(this);
   }
 
+  get isDirty() {
+    return (
+      !!this.rule &&
+      (this.rule.name !== this.savedName || (this.rule.content || '') !== this.savedContent)
+    );
+  }
+
   async load(path: string): Promise<Rule> {
+    const loadId = ++this.loadId;
     return this.#whenMqttReady()
       .then(() => this.#editorProxy.Load({ path }))
       .then((res: RuleFetchData) => {
         runInAction(() => {
+          if (loadId !== this.loadId) return;
+          this.savedContent = res.content || '';
+          this.savedName = path;
           this.rule = {
             initName: path,
             name: path,
             enabled: res.enabled,
             content: res.content,
           };
+          this.errorSource = res.error ? { content: res.content || '', origin: 'loaded' } : null;
           if (res.error) {
             this.setError(res.error);
           }
@@ -57,6 +73,10 @@ export default class RulesStore {
   }
 
   resetRule() {
+    this.loadId++;
+    this.errorSource = null;
+    this.savedContent = '';
+    this.savedName = '';
     this.rule = {
       name: '',
       initName: '',
@@ -72,16 +92,21 @@ export default class RulesStore {
       path = this.getValidRuleName(rule.name);
     }
 
-    return this.#editorProxy.Save({ path, content: rule.content })
+    const submitted = rule.content || '';
+    return this.#editorProxy.Save({ path, content: submitted })
       .then(async (res: RuleSaveData) => {
         runInAction(() => {
           if (res.error) {
+            this.errorSource = { content: submitted, origin: 'submitted' };
             this.setError({
               message: res.error,
               traceback: res.traceback,
             });
           } else {
             rule.error = null;
+            this.errorSource = null;
+            this.savedContent = submitted;
+            this.savedName = rule.initName || res.path;
           }
         });
         return res.path;
@@ -131,9 +156,12 @@ export default class RulesStore {
     const copiedRule = await this.load(path);
     copiedRule.name = generateNextId(
       this.rules.map((rule) => rule.virtualPath.replace(/\.js$/, '')),
-      copiedRule.name.replace(/\.js$/, ''),
+      copiedRule.name.replace(/\.js$/, '')
     );
-    const copiedRuleName = await this.save({ ...copiedRule, initName: this.getValidRuleName(copiedRule.name) });
+    const copiedRuleName = await this.save({
+      ...copiedRule,
+      initName: this.getValidRuleName(copiedRule.name),
+    });
     await new Promise((resolve) => setTimeout(resolve, 2000));
     await this.changeState(copiedRuleName, false);
   }
@@ -151,23 +179,32 @@ export default class RulesStore {
   setError(error: RuleError) {
     this.rule.error = {
       message: error?.message || '',
+      traceback: error?.traceback || [],
     };
 
     this.rule.error.errorLine = error?.traceback?.length ? error?.traceback[0].line : null;
   }
 
   subscribeRuleDebugging() {
-    this.#mqttClient.addStickySubscription('/devices/wbrules/controls/Rule debugging', ({ payload }) => {
-      runInAction(() => {
-        this.isRuleDebugEnabled = payload === '1';
-      });
-    });
+    this.#mqttClient.addStickySubscription(
+      '/devices/wbrules/controls/Rule debugging',
+      ({ payload }) => {
+        runInAction(() => {
+          this.isRuleDebugEnabled = payload === '1';
+        });
+      }
+    );
   }
 
   toggleRuleDebugging() {
     runInAction(() => {
       const value = !this.isRuleDebugEnabled;
-      this.#mqttClient.send('/devices/wbrules/controls/Rule debugging/on', String(Number(value)), false, 1);
+      this.#mqttClient.send(
+        '/devices/wbrules/controls/Rule debugging/on',
+        String(Number(value)),
+        false,
+        1
+      );
       this.isRuleDebugEnabled = value;
     });
   }
@@ -179,7 +216,11 @@ export default class RulesStore {
         if (this.logs.length === MAX_MESSAGES) {
           this.logs.shift();
         }
-        this.logs.push({ level: topic.replace(/^.*\//, ''), payload: payload.trim(), time: new Date().getTime() });
+        this.logs.push({
+          level: topic.replace(/^.*\//, ''),
+          payload: payload.trim(),
+          time: new Date().getTime(),
+        });
       });
     });
   }

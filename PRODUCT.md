@@ -9,10 +9,10 @@ web
 Full fork of official homeui v2.208.1-wb100, commit 0546d10e7ade2894baa5a828549900b708ca52a8, matching the installed frontend. Existing AngularJS routing/services, React 18 pages/editors and Webpack build remain. Static production files run through nginx; no Node runtime on WB.
 
 ## Users
-Primary audience: installers connecting, configuring and diagnosing devices. Secondary audience: installation owners and Wiren Board maintainers evaluating the proposal.
+Two explicit audiences: installers connecting, configuring and diagnosing devices in Installer mode; installation owners using configured controls and panels in My home mode. Wiren Board maintainers evaluate both workflows.
 
 ## Product Purpose
-A complete alternative to the installed UI, with all configuration and editor capabilities inside the new interface on its own port. The next workflow phase prioritizes installer commissioning and diagnosis. The user's correction explicitly rules out a landing page with links to the standard UI.
+A complete alternative to the installed UI, with all configuration and editor capabilities inside the new interface on its own port. Two switchable workspaces prioritize commissioning/diagnosis and everyday use separately. Mode is a browser preference, not an authorization boundary. The user's correction explicitly rules out a landing page with links to the standard UI.
 
 ## Operating Context
 Validated on a WB7 controller in a local network. Source matches installed homeui 2.208.1-wb100 and existing backend. Port 8080; deployment assets live on /mnt/data. Port 80 remains an independent fallback during evaluation.

@@ -18,7 +18,7 @@ import { Table, TableCell, TableRow } from '@/components/table';
 import { Tooltip } from '@/components/tooltip';
 import { PageLayout } from '@/layouts/page';
 import { authStore, UserRole } from '@/stores/auth';
-import { DashboardEdit } from './components/dashboard-edit';
+import { uiStore } from '@/stores/ui';
 import type { DashboardListPageProps } from './types';
 import './styles.css';
 
@@ -28,14 +28,9 @@ const DashboardList = observer(({ dashboardsStore }: DashboardListPageProps) => 
   const isDesktop = useMediaQuery({ minWidth: 874 });
   const {
     dashboards,
-    isLoading,
-    addDashboard,
-    updateDashboards,
-    updateDashboard,
-  } = dashboardsStore;
-  const hasEditRights = authStore.hasRights(UserRole.Operator);
+    isLoading, updateDashboards } = dashboardsStore;
+  const hasEditRights = authStore.hasRights(UserRole.Operator) && uiStore.workspaceMode === 'installer';
   const [deletedDashboardId, setDeletedDashboardId] = useState(null);
-  const [editedDashboardId, setEditedDashboardId] = useState(null);
   const dashboardsList = useMemo(() => Array.from(dashboards.values()), [dashboards.values()]);
 
   return (
@@ -48,7 +43,8 @@ const DashboardList = observer(({ dashboardsStore }: DashboardListPageProps) => 
             <Dropdown
               value={null}
               options={[
-                { label: t('dashboards.labels.text-dashboard'), value: 'dashboard' },
+                { label: t('dashboards.labels.text-dashboard'), value: 'dashboard',
+                },
                 { label: 'Svg', value: 'svg' },
               ]}
               placeholder={t('dashboards.buttons.add')}
@@ -57,7 +53,7 @@ const DashboardList = observer(({ dashboardsStore }: DashboardListPageProps) => 
                 if (option?.value === 'svg') {
                   location.assign('/#!/dashboards/svg/add');
                 } else if (option?.value === 'dashboard') {
-                  setEditedDashboardId(Symbol('new'));
+                  location.hash = '!/panel-editor';
                 }
               }}
             />
@@ -72,12 +68,8 @@ const DashboardList = observer(({ dashboardsStore }: DashboardListPageProps) => 
                 <TableCell width={24} />
               )}
               <TableCell>{t('dashboards.labels.name')}</TableCell>
-              {hasEditRights && (
-                <TableCell width={40} />
-              )}
-              {hasEditRights && (
-                <TableCell width={40} />
-              )}
+              {hasEditRights && <TableCell width={40} />}
+              {hasEditRights && <TableCell width={40} />}
               {dashboardsList.some((dashboard) => dashboard.isSvg) && (
                 <TableCell width={30} align="center">{t('dashboards.labels.type')}</TableCell>
               )}
@@ -88,7 +80,12 @@ const DashboardList = observer(({ dashboardsStore }: DashboardListPageProps) => 
               tag="tbody"
               list={dashboardsList}
               setList={(value, changed) => {
-                if (changed) {
+                if (
+                  hasEditRights &&
+                  changed &&
+                  value.map((item) => item.id).join('\0') !==
+                    dashboardsList.map((item) => item.id).join('\0')
+                ) {
                   const clearValue = value.map((dashboard: any) => {
                     // eslint-disable-next-line no-unused-vars
                     const { chosen, selected, ...value } = dashboard;
@@ -104,10 +101,12 @@ const DashboardList = observer(({ dashboardsStore }: DashboardListPageProps) => 
                 <TableRow
                   role="row"
                   aria-roledescription="sortable row"
-                  aria-label={t('dashboards.buttons.open', { name: dashboard.name })}
+                  aria-label={t('dashboards.buttons.open', { name: dashboard.name,
+                  })}
                   url={dashboard.isSvg
                     ? `/#!/dashboards/svg/view/${dashboard.id}`
-                    : `/#!/dashboards/${dashboard.id}`}
+                      : `/#!/dashboards/${dashboard.id}`
+                  }
                   key={dashboard.id}
                 >
                   {hasEditRights && dashboardsList.length > 1 && width >= 480 && (
@@ -116,9 +115,7 @@ const DashboardList = observer(({ dashboardsStore }: DashboardListPageProps) => 
                     </TableCell>
                   )}
 
-                  <TableCell ellipsis>
-                    {dashboard.name}
-                  </TableCell>
+                  <TableCell ellipsis>{dashboard.name}</TableCell>
 
                   {hasEditRights && (
                     <TableCell width={30} align="center" preventClick>
@@ -126,13 +123,16 @@ const DashboardList = observer(({ dashboardsStore }: DashboardListPageProps) => 
                         <Button
                           size="small"
                           icon={<EditIcon />}
-                          aria-haspopup={dashboard.isSvg ? null : 'dialog'}
-                          aria-label={t('dashboards.buttons.edit-dashboard', { name: dashboard.name })}
+
+                          aria-label={t('dashboards.buttons.edit-dashboard', {
+                            name: dashboard.name,
+                          })}
                           onClick={() => {
                             if (dashboard.isSvg) {
                               location.assign(`/#!/dashboards/svg/edit/${dashboard.id}`);
                             } else {
-                              setEditedDashboardId(dashboard.id);
+                              location.hash =
+                                '!/panel-editor?panel=' + encodeURIComponent(dashboard.id);
                             }
                           }}
                         />
@@ -147,7 +147,9 @@ const DashboardList = observer(({ dashboardsStore }: DashboardListPageProps) => 
                           size="small"
                           variant="danger"
                           icon={<TrashIcon />}
-                          aria-label={t('dashboards.buttons.delete-dashboard', { name: dashboard.name })}
+                          aria-label={t('dashboards.buttons.delete-dashboard', {
+                            name: dashboard.name,
+                          })}
                           aria-haspopup="dialog"
                           onClick={() => setDeletedDashboardId(dashboard.id)}
                         />
@@ -182,14 +184,18 @@ const DashboardList = observer(({ dashboardsStore }: DashboardListPageProps) => 
                   {hasEditRights && (
                     <TableCell align="right" preventClick>
                       <Tooltip
-                        text={t(dashboard.options?.isHidden
-                          ? 'dashboards.buttons.hidden'
-                          : 'dashboards.buttons.visible')}
+                        text={t(
+                          dashboard.options?.isHidden
+                            ? 'dashboards.buttons.hidden'
+                            : 'dashboards.buttons.visible'
+                        )}
                         placement="left"
                       >
                         <Switch
                           id={`visibility-${dashboard.id}`}
-                          ariaLabel={t('dashboards.buttons.visible-flag', { name: dashboard.name })}
+                          ariaLabel={t('dashboards.buttons.visible-flag', {
+                            name: dashboard.name,
+                          })}
                           value={dashboard.options?.isHidden ? !dashboard.options?.isHidden : true}
                           onChange={() => dashboard.toggleVisibility()}
                         />
@@ -201,9 +207,7 @@ const DashboardList = observer(({ dashboardsStore }: DashboardListPageProps) => 
             </ReactSortable>
           </Table>
         ) : (
-          <Alert variant="info">
-            {t('dashboards.labels.empty-list')}
-          </Alert>
+          <Alert variant="info">{t('dashboards.labels.empty-list')}</Alert>
         )}
       </PageLayout>
 
@@ -216,7 +220,7 @@ const DashboardList = observer(({ dashboardsStore }: DashboardListPageProps) => 
           variant="danger"
           acceptLabel={t('dashboards.buttons.delete')}
           closeCallback={() => setDeletedDashboardId(null)}
-          confirmCallback={async() => {
+          confirmCallback={async () => {
             await dashboards.get(deletedDashboardId).delete();
             setDeletedDashboardId(null);
           }}
@@ -226,26 +230,10 @@ const DashboardList = observer(({ dashboardsStore }: DashboardListPageProps) => 
             values={{
               name: dashboards.get(deletedDashboardId)?.name,
             }}
-            components={[<b key="dashboard-name"/>]}
+            components={[<b key="dashboard-name" />]}
             shouldUnescape
           />
         </Confirm>
-      )}
-      {editedDashboardId && (
-        <DashboardEdit
-          dashboard={dashboards?.get(editedDashboardId)}
-          dashboards={dashboardsList}
-          isOpened
-          onClose={() => setEditedDashboardId(null)}
-          onSave={async (data, isNew) => {
-            if (isNew) {
-              await addDashboard(data);
-            } else {
-              await updateDashboard(editedDashboardId, { ...dashboards?.get(data.id), ...data });
-            }
-            setEditedDashboardId(null);
-          }}
-        />
       )}
     </>
   );

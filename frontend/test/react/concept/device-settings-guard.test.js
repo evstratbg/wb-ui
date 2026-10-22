@@ -36,6 +36,7 @@ const dependencies = {
   '@/components/alert': { Alert: ({ children }) => React.createElement('div', { role: 'alert' }, children) },
   '@/components/button': { Button: ({ label, disabled, onClick }) => React.createElement('button', { disabled, onClick }, label) },
   '@/components/confirm': { Confirm: () => null },
+  '@/components/configuration-changes/configuration-changes': { ConfigurationChanges: () => null },
   '@/components/loader': { Loader: () => null },
   '@/components/json-schema-editor/optional-params-select-dialog': {
     OptionalParamsSelectDialog: ({ isOpened }) => isOpened ? React.createElement(PortalEditor, { name: 'parameter-dialog' }) : null,

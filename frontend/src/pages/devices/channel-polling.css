@@ -1,0 +1,41 @@
+.channel-polling > p {
+  color: var(--gray-color);
+  line-height: 1.6;
+}
+.channel-polling code {
+  background: none;
+  color: var(--text-color);
+  padding: 0;
+  overflow-wrap: anywhere;
+}
+.channel-polling fieldset {
+  border: 0;
+  padding: 0;
+  margin: 20px 0;
+  min-width: 0;
+}
+.channel-polling label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+.channel-polling select,
+.channel-polling input {
+  display: block;
+  width: 100%;
+  border: 1px solid var(--input-border-color);
+  background: var(--input-background);
+  color: var(--text-color);
+  padding: 10px;
+  border-radius: 7px;
+  margin-top: 8px;
+}
+.channel-polling-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px;
+  border-top: 1px solid var(--border-color);
+  margin-top: 24px;
+  padding-top: 18px;
+}

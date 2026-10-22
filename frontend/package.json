@@ -1,6 +1,6 @@
 {
   "name": "homeui",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Experimental Wiren Board UI based on homeui v2.208.1-wb100",
   "scripts": {
     "clean": "rimraf -G dist coverage ./tmp",

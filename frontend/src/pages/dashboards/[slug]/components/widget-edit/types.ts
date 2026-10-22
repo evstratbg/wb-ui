@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import { type Widget } from '@/stores/dashboards/widget';
 import { type Cell } from '@/stores/devices';
 
@@ -16,5 +17,6 @@ export interface WidgetEditProps {
   isOpened: boolean;
   controls: any;
   onClose: () => void;
+  scopeControl?: ReactNode;
   onSave: (data: any) => void;
 }

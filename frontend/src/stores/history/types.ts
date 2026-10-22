@@ -8,6 +8,7 @@ export interface ChartsControl {
   deviceId: string;
   controlId: string;
   valueType?: string;
+  units?: string;
   widget?: { id: string; name: string };
 }
 

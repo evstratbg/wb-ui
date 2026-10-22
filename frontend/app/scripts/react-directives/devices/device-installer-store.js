@@ -1,3 +1,4 @@
+import { configDiff } from '@/utils/config-diff';
 import cloneDeep from "lodash/cloneDeep";
 import isEqual from "lodash/isEqual";
 import {
@@ -30,6 +31,7 @@ export default class DeviceInstallerStore {
       serialPortProxy,
     };
     this.editor = null;
+    this.baselineSnapshot = null;
     this.loading = false;
     this.loaded = false;
     this.isSaving = false;
@@ -40,6 +42,8 @@ export default class DeviceInstallerStore {
     this.contentLoads = new WeakMap();
     makeObservable(this, {
       editor: observable.ref,
+      baselineSnapshot: observable.ref,
+      pendingChanges: computed,
       loading: observable,
       loaded: observable,
       isSaving: observable,
@@ -57,6 +61,24 @@ export default class DeviceInstallerStore {
 
   get isDirty() {
     return !!this.editor?.isDirty;
+  }
+
+  get pendingChanges() {
+    return this.isDirty ? configDiff(this.baselineSnapshot, this.editor.makeConfigJson()) : [];
+  }
+
+  getPollingChannel(deviceId, controlId) {
+    const schema = this.getDeviceMatch(deviceId)?.tab.schemaStore;
+    if (!schema) return null;
+    const matches = [];
+    const visit = (group) => {
+      group.channels.forEach((channel) => {
+        if ((channel.channel.mqtt_id || channel.channel.name) === controlId) matches.push(channel);
+      });
+      group.subgroups.forEach(visit);
+    };
+    visit(schema.topLevelGroup);
+    return matches.length === 1 ? matches[0] : null;
   }
 
   get allowSave() {
@@ -150,6 +172,7 @@ export default class DeviceInstallerStore {
         content: config,
       });
       baseline = cloneDeep(config);
+      runInAction(() => { this.baselineSnapshot = cloneDeep(config); });
     };
     const editor = new ConfigEditorPageStore(
       loadConfig,
@@ -177,6 +200,7 @@ export default class DeviceInstallerStore {
         return;
       }
       this.loaded = editor.loaded;
+      this.baselineSnapshot = cloneDeep(baseline);
       this.matches = editor.tabs.portTabs.flatMap((port) =>
         port.children.map((tab) => ({ id: tab.mqttId, tab, port })),
       );

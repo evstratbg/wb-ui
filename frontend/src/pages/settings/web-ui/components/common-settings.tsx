@@ -3,12 +3,15 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/button';
 import { type Option } from '@/components/dropdown';
-import { BooleanField, FormButtonGroup, FormFieldGroup, OptionsField, StringField } from '@/components/form';
+import { BooleanField, FormButtonGroup, FormFieldGroup, OptionsField, StringField,
+} from '@/components/form';
 import { authStore, UserRole } from '@/stores/auth';
+import { uiStore } from '@/stores/ui';
 import { type CommonSettingsProps } from '../types';
 
 const CommonSettings = observer(({ onChangeLanguage, dashboardsStore }: CommonSettingsProps) => {
   const { t } = useTranslation();
+  const simple = uiStore.workspaceMode === 'home' || !authStore.hasRights(UserRole.Operator);
   const [showSystemDevices, setShowSystemDevices] = useState((localStorage['show-system-devices'] || 'no') === 'yes');
   const [language, setLanguage] = useState(localStorage.getItem('language') || 'en');
   const [defaultDashboardId, setDefaultDashboardId] = useState('');
@@ -22,7 +25,8 @@ const CommonSettings = observer(({ onChangeLanguage, dashboardsStore }: CommonSe
     setDescription(dashboardsStore.description ?? '');
     setDefaultDashboardId(dashboardsStore.defaultDashboardId ?? '');
     setIsShowWidgetsPage(dashboardsStore.isShowWidgetsPage ?? false);
-  }, [dashboardsStore.description, dashboardsStore.defaultDashboardId, dashboardsStore.isShowWidgetsPage]);
+  }, [dashboardsStore.description, dashboardsStore.defaultDashboardId, dashboardsStore.isShowWidgetsPage,
+  ]);
 
   const languageOptions: Option<string>[] = [
     { label: 'English', value: 'en' },
@@ -30,9 +34,10 @@ const CommonSettings = observer(({ onChangeLanguage, dashboardsStore }: CommonSe
   ];
 
   const applyHandler = () => {
-    localStorage.setItem('show-system-devices', showSystemDevices ? 'yes' : 'no');
+    if (!simple) localStorage.setItem('show-system-devices', showSystemDevices ? 'yes' : 'no');
     localStorage.setItem('language', language);
     onChangeLanguage(language);
+    if (simple) return;
     dashboardsStore.setDefaultDashboardId(defaultDashboardId);
     dashboardsStore.setDescription(description);
     dashboardsStore.setIsShowWidgetsPage(isShowWidgetsPage);
@@ -47,7 +52,7 @@ const CommonSettings = observer(({ onChangeLanguage, dashboardsStore }: CommonSe
         onChange={setLanguage}
       />
 
-      {authStore.hasRights(UserRole.Operator) && (
+      {!simple && authStore.hasRights(UserRole.Operator) && (
         <StringField
           title={t('web-ui-settings.labels.name')}
           description={t('web-ui-settings.labels.name-description')}
@@ -56,7 +61,9 @@ const CommonSettings = observer(({ onChangeLanguage, dashboardsStore }: CommonSe
         />
       )}
 
-      <OptionsField
+      {!simple && (
+        <>
+          <OptionsField
         title={t('web-ui-settings.labels.default-dashboard')}
         value={defaultDashboardId}
         options={options}
@@ -75,7 +82,8 @@ const CommonSettings = observer(({ onChangeLanguage, dashboardsStore }: CommonSe
         value={showSystemDevices}
         onChange={setShowSystemDevices}
       />
-
+        </>
+      )}
       <FormButtonGroup>
         <Button
           label={t('common.buttons.apply')}

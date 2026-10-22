@@ -190,6 +190,7 @@ function createInstaller(ports = [{
       delete data.config.ports;
       this.loaded = true;
     }
+    makeConfigJson() { return this.config; }
     async save() {
       this.pageWrapperStore.error = '';
       try {
@@ -204,6 +205,7 @@ function createInstaller(ports = [{
     '~/i18n/react/config': { language: 'en', t: (_key, options) => options.defaultValue },
     '@/stores/device-manager': { DeviceTypesStore },
     '@/utils/formatError': { formatError: String },
+    '@/utils/config-diff': loadSource('src/utils/config-diff.ts'),
     '../device-manager/config-editor/configEditorPageStore': Editor,
   });
   const installer = new DeviceInstallerStore(proxies);
@@ -411,6 +413,7 @@ test.each(['user', 'operator', 'admin'])('the devices bridge creates configurati
     '@/pages/devices': { __esModule: true, default: () => null },
     '@/stores/auth': { UserRole: { Admin: 'admin' }, authStore: { hasRights: () => role === 'admin' } },
     '@/utils/formatError': { formatError: String },
+    '@/utils/config-diff': loadSource('src/utils/config-diff.ts'),
     '~/react-directives/locale': { setReactLocale: jest.fn() },
     './device-installer-store': Installer,
   });

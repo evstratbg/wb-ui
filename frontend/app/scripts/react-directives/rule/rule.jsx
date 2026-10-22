@@ -2,7 +2,7 @@ import ReactDOM from 'react-dom/client';
 import EditRulePage from '@/pages/rules/[rule]';
 import { setReactLocale } from '~/react-directives/locale';
 
-export default function ruleDirective($rootScope) {
+export default function ruleDirective($rootScope, LogsProxy, PageState) {
   'ngInject';
 
   setReactLocale();
@@ -16,11 +16,14 @@ export default function ruleDirective($rootScope) {
         <EditRulePage
           rulesStore={$rootScope.rulesStore}
           devicesStore={$rootScope.devicesStore}
+          logsProxy={LogsProxy}
+          onDirtyChange={(dirty) => PageState.setDirty(dirty)}
         />
       );
 
       element.on('$destroy', ()=> {
         scope.root.unmount();
+        PageState.setDirty(false);
       });
     },
   };

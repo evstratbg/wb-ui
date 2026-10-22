@@ -54,7 +54,7 @@ test('overview is a native route and all original editor routes remain available
 });
 
 test.each([false, true])('root still opens the configured default dashboard (SVG: %s)', (isSvg) => {
-  const { default: HomeController } = loadSource('app/scripts/controllers/homeController.js', { mobx: { when: jest.fn() } });
+  const { default: HomeController } = loadSource('app/scripts/controllers/homeController.js', { mobx: { when: jest.fn() }, '@/stores/ui': { uiStore: { workspaceMode: 'installer' } } });
   const state = { go: jest.fn() };
   const dashboardsStore = { isLoading: false, defaultDashboardId: 'preferred', dashboards: new Map([['preferred', { isSvg }]]) };
   new HomeController(state, { dashboardsStore }, {});
@@ -62,7 +62,7 @@ test.each([false, true])('root still opens the configured default dashboard (SVG
 });
 
 test('root still falls back to the native dashboard list when no default is configured', () => {
-  const { default: HomeController } = loadSource('app/scripts/controllers/homeController.js', { mobx: { when: jest.fn() } });
+  const { default: HomeController } = loadSource('app/scripts/controllers/homeController.js', { mobx: { when: jest.fn() }, '@/stores/ui': { uiStore: { workspaceMode: 'installer' } } });
   const state = { go: jest.fn() };
   new HomeController(state, { dashboardsStore: { isLoading: false, dashboards: new Map() } }, {});
   expect(state.go).toHaveBeenCalledWith('dashboards');

@@ -243,8 +243,8 @@ body .menuItem-subList .menuItem-linkActive {
   background: #34452e;
   color: #dff0cf;
 }
-body .navigation-list > li:has([aria-label="Правила"]),
-body .navigation-list > li:has([aria-label="Rules"]) {
+body .navigation-list > li:has([aria-label='Правила']),
+body .navigation-list > li:has([aria-label='Rules']) {
   margin-top: 15px;
   padding-top: 16px;
   border-top: 1px solid #39423a;
@@ -601,5 +601,47 @@ body.hmi navigation {
     scroll-behavior: auto !important;
     animation: none !important;
     transition: none !important;
+  }
+}
+
+.shell-modeSwitch {
+  display: flex;
+  flex-shrink: 0;
+  gap: 3px;
+  padding: 3px;
+  border: 1px solid var(--border-color);
+  border-radius: 7px;
+}
+.shell-modeSwitch button {
+  background: transparent;
+  border: 0;
+  border-radius: 4px;
+  padding: 7px 10px;
+  font-size: 12px;
+  color: var(--gray-color);
+  white-space: nowrap;
+}
+.shell-modeSwitch button[aria-pressed='true'] {
+  background: var(--background-accent-color);
+  color: var(--primary-color);
+  font-weight: 500;
+}
+.shell-modeSwitchMobile {
+  display: none;
+}
+@media (max-width: 768px) {
+  .shell-modeSwitchMobile {
+    display: flex;
+    margin: 10px 0 20px;
+    border-color: var(--nav-border);
+  }
+  .shell-modeSwitchMobile button {
+    flex: 1;
+    padding: 12px 10px;
+    color: var(--nav-text-color);
+  }
+  .shell-modeSwitchMobile button[aria-pressed='true'] {
+    background: var(--nav-item-active);
+    color: #fff;
   }
 }

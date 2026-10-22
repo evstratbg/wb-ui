@@ -2,6 +2,7 @@ import { type ChartProgress, type ChartsControl, ChartType } from './types';
 
 export class ChartTraits {
   channelName: string;
+  units: string;
   progress: ChartProgress = { value: 0, isLoaded: false };
   type: ChartType = ChartType.Number;
   xValues: Date[] = [];
@@ -14,6 +15,7 @@ export class ChartTraits {
 
   constructor(chartsControl: ChartsControl) {
     this.channelName = chartsControl.name;
+    this.units = chartsControl.units || '';
 
     if (chartsControl.valueType === 'boolean' || chartsControl.valueType === 'pushbutton') {
       this.type = ChartType.Boolean;

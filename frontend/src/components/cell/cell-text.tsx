@@ -20,7 +20,7 @@ export const CellText = observer(({ cell, isCompact, hideHistory }: CellTextProp
         'deviceCell-isEmpty': isCompact && !cell.value,
       })}
     >
-      {!isCompact && <CellHistory cell={cell} />}
+      {!isCompact && !hideHistory && <CellHistory cell={cell} />}
 
       {cell.value && cell.readOnly && (
         <Tooltip

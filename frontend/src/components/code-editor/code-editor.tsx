@@ -6,14 +6,19 @@ import { breakpointState, customGutter, getGutterEffects } from './helpers';
 import { type CodeEditorProps } from './types';
 import './styles.css';
 
-export const CodeEditor = ({ text, errorLines, autoFocus, extensions = [], onChange, onSave }: CodeEditorProps) => {
+export const CodeEditor = ({ text, errorLines, autoFocus, extensions = [], onChange, onSave,
+  isReadOnly = false,
+  focusLine,
+  focusRequest,
+}: CodeEditorProps) => {
   const editor = useRef<ReactCodeMirrorRef>(null);
   const [allExtensions, setAllExtensions] = useState([]);
 
   const onEditorReInit = (view: EditorView, state: EditorState) => {
     if (errorLines?.length) {
       view.dispatch({
-        selection: { anchor: state.doc.line(Math.min(errorLines[0], state.doc.lines)).from },
+        selection: { anchor: state.doc.line(Math.min(errorLines[0], state.doc.lines)).from,
+        },
         scrollIntoView: true,
       });
     }
@@ -43,7 +48,7 @@ export const CodeEditor = ({ text, errorLines, autoFocus, extensions = [], onCha
               return true;
             },
           },
-        ]),
+        ])
       );
     }
 
@@ -62,6 +67,19 @@ export const CodeEditor = ({ text, errorLines, autoFocus, extensions = [], onCha
     }
   }, [errorLines]);
 
+  useEffect(() => {
+    const view = editor.current?.view;
+    if (view && Number.isInteger(focusLine) && focusLine > 0) {
+      view.dispatch({
+        selection: {
+          anchor: view.state.doc.line(Math.min(focusLine, view.state.doc.lines)).from,
+        },
+        scrollIntoView: true,
+      });
+      view.focus();
+    }
+  }, [focusLine, focusRequest]);
+
   return (
     <CodeMirror
       ref={editor}
@@ -71,7 +89,9 @@ export const CodeEditor = ({ text, errorLines, autoFocus, extensions = [], onCha
       autoFocus={autoFocus}
       extensions={allExtensions}
       onCreateEditor={onEditorReInit}
-      onChange={onChange}
+      editable={!isReadOnly}
+      readOnly={isReadOnly}
+      onChange={isReadOnly ? undefined : onChange}
     />
   );
 };

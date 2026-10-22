@@ -75,6 +75,7 @@
    },
    "navigation": {
       "labels": {
+         "my-home": "My home",
          "overview": "Overview",
          "device-setup": "Devices & ports",
          "network": "Network",

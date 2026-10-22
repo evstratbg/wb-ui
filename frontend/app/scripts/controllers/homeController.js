@@ -1,4 +1,5 @@
 import { when } from 'mobx';
+import { uiStore } from '@/stores/ui';
 
 export default class HomeCtrl {
   constructor($state, $rootScope, rolesFactory) {
@@ -8,6 +9,7 @@ export default class HomeCtrl {
     const store = $rootScope.dashboardsStore;
 
     const redirect = () => {
+      if (uiStore.workspaceMode === 'home' && !$state.params?.hmi) { $state.go('living'); return; }
       const { defaultDashboardId, dashboards } = store;
 
       if (defaultDashboardId && dashboards.get(defaultDashboardId)) {

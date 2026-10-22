@@ -64,10 +64,9 @@
 .devices-catalogHeading,
 .devices-catalogItem {
   display: grid;
-  grid-template-columns: minmax(200px, 1.3fr) minmax(170px, 1fr) 70px minmax(
-      130px,
-      0.8fr
-    ) 18px;
+  grid-template-columns:
+    minmax(200px, 1.3fr) minmax(170px, 1fr) 70px minmax(130px, 0.8fr)
+    18px;
   align-items: center;
   gap: 18px;
   padding: 16px 20px;
@@ -88,20 +87,12 @@
 }
 .devices-catalogItem:hover,
 .devices-catalogItem:focus-visible {
-  background: color-mix(
-    in srgb,
-    var(--primary-color) 5%,
-    var(--input-background)
-  );
+  background: color-mix(in srgb, var(--primary-color) 5%, var(--input-background));
   color: var(--text-color);
   text-decoration: none;
 }
 .devices-catalogItemSelected {
-  background: color-mix(
-    in srgb,
-    var(--primary-color) 9%,
-    var(--input-background)
-  );
+  background: color-mix(in srgb, var(--primary-color) 9%, var(--input-background));
 }
 .devices-catalogItem:focus-visible {
   outline: 2px solid var(--primary-color);
@@ -277,7 +268,7 @@
   border-bottom: 1px solid var(--border-color);
 }
 .devices-channelGroup > summary::before {
-  content: "";
+  content: '';
   width: 7px;
   height: 7px;
   border-right: 1px solid currentColor;
@@ -369,11 +360,7 @@
 .devices-draftNotice {
   padding: 13px 16px;
   margin-bottom: 18px;
-  background: color-mix(
-    in srgb,
-    var(--primary-color) 8%,
-    var(--input-background)
-  );
+  background: color-mix(in srgb, var(--primary-color) 8%, var(--input-background));
   border: 1px solid var(--border-color);
   border-radius: 7px;
   line-height: 1.6;
@@ -401,10 +388,9 @@
   }
   .devices-catalogHeading,
   .devices-catalogItem {
-    grid-template-columns: minmax(170px, 1.3fr) minmax(140px, 1fr) 50px minmax(
-        120px,
-        0.8fr
-      ) 14px;
+    grid-template-columns:
+      minmax(170px, 1.3fr) minmax(140px, 1fr) 50px minmax(120px, 0.8fr)
+      14px;
     gap: 12px;
   }
   .devices-detailHeader {
@@ -423,10 +409,9 @@
   }
   .devices-catalogHeading,
   .devices-catalogItem {
-    grid-template-columns: minmax(150px, 1.3fr) minmax(130px, 1fr) 45px minmax(
-        110px,
-        0.8fr
-      ) 14px;
+    grid-template-columns:
+      minmax(150px, 1.3fr) minmax(130px, 1fr) 45px minmax(110px, 0.8fr)
+      14px;
   }
   .devices-workspaceSelected .devices-catalogToolbar {
     display: none;
@@ -503,4 +488,7 @@
   .devices-channelGroup summary h3 {
     font-size: 13px;
   }
+}
+.devices-channelRow {
+  grid-template-columns: minmax(0, 1fr) auto auto;
 }

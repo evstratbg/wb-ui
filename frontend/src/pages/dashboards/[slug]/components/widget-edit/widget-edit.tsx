@@ -19,7 +19,7 @@ import { generateNextId } from '@/utils/id';
 import type { CellSimple, WidgetEditProps } from './types';
 import './styles.css';
 
-export const WidgetEdit = ({ widget, cells, controls, isOpened, onSave, onClose }: WidgetEditProps) => {
+export const WidgetEdit = ({ widget, cells, controls, isOpened, onSave, onClose, scopeControl }: WidgetEditProps) => {
   const { t } = useTranslation();
   const [widgetCells, setWidgetCells] = useState<(CellSimple)[]>([]);
   const [isJsonView, setIsJsonView] = useState(false);
@@ -138,6 +138,7 @@ export const WidgetEdit = ({ widget, cells, controls, isOpened, onSave, onClose 
       isPreventSubmit
     >
       <div className="widgetEdit-content">
+        {scopeControl}
         {isJsonView ? (
           <CodeMirror
             className="widgetEdit-codeEditor"

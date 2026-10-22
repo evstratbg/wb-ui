@@ -15,6 +15,7 @@ function routing($stateProvider, $locationProvider, $urlRouterProvider) {
       template: require('../views/home.html'),
       controller: 'HomeCtrl as $ctrl',
     })
+    .state('living', { url: '/home', template: '<living-page />' })
     .state('overview', {
       url: '/overview',
       template: '<overview-page />',
@@ -114,6 +115,13 @@ function routing($stateProvider, $locationProvider, $urlRouterProvider) {
       redirectTo: 'widgets',
     })
     //...........................................................................
+    .state('panel-builder', {
+      url: '/panel-editor?panel', template: '<panel-builder />',
+      resolve: { ctrl: ($q, $ocLazyLoad) => {
+        'ngInject';
+        return import(/* webpackChunkName: 'panel-builder' */ './controllers/panelBuilderController').then(module => $ocLazyLoad.load({ name: module.default.name }));
+      } },
+    })
     .state('dashboards', {
       url: '/dashboards',
       template: '<dashboards-page />',

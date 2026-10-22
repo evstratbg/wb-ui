@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-21T08:44:04+00:00",
+  "generatedAt": "2026-10-22T23:06:24.584910+00:00",
   "title": "Design System: Wiren Board UI concept",
   "extensions": {
     "colorMeta": {
@@ -457,6 +457,10 @@
         "value": "1150px"
       },
       {
+        "name": "rules-stacked-diagnostics",
+        "value": "1100px"
+      },
+      {
         "name": "hide-shell-search",
         "value": "1050px"
       },
@@ -548,6 +552,20 @@
       "description": "A keyboard-operable technical group kept below primary channel tasks.",
       "html": "<details class=\"ds-channel-group\"><summary><h3>Счётчики и служебные каналы</h3></summary><p>Служебные сведения устройства</p></details>",
       "css": ".ds-channel-group{color:var(--text-color,#243029);font:400 13px/1.5 var(--font,Roboto,sans-serif)}.ds-channel-group>summary{display:flex;align-items:center;gap:9px;padding:11px 0;cursor:pointer;list-style:none;border-bottom:1px solid var(--border-color,#e0e6df)}.ds-channel-group>summary::before{content:\"\";width:7px;height:7px;border-right:1px solid currentColor;border-bottom:1px solid currentColor;transform:rotate(-45deg);margin-right:3px}.ds-channel-group[open]>summary::before{transform:rotate(45deg)}.ds-channel-group h3{font-weight:500;font-size:14px;margin:0;line-height:1.5}.ds-channel-group>summary:focus-visible{outline:2px solid var(--primary-color,#568d2d);outline-offset:2px}.ds-channel-group>p{padding:11px 0;margin:0;color:var(--gray-color,#67736b)}@media(max-width:640px){.ds-channel-group h3{font-size:13px}}"
+    },
+    {
+      "name": "Workspace Switch",
+      "kind": "nav",
+      "description": "Desktop workspace choice beside the breadcrumb; the mobile counterpart sits inside the dark navigation drawer.",
+      "html": "<div class=\"ds-workspace\" role=\"group\" aria-label=\"Interface mode\"><button aria-pressed=\"true\">My home</button><button aria-pressed=\"false\">Installer</button></div>",
+      "css": ".ds-workspace{display:flex;gap:3px;padding:3px;border:1px solid var(--border-color,#e0e6df);border-radius:7px;width:max-content}.ds-workspace button{background:transparent;border:0;border-radius:4px;padding:7px 10px;font:400 12px Roboto,sans-serif;color:var(--gray-color,#67736b);white-space:nowrap;cursor:pointer}.ds-workspace button[aria-pressed=\"true\"]{background:var(--background-accent-color,#eef2eb);color:var(--primary-color,#568d2d);font-weight:500}.ds-workspace button:focus-visible{outline:2px solid var(--primary-color,#568d2d);outline-offset:3px}"
+    },
+    {
+      "name": "Configuration Changes",
+      "kind": "custom",
+      "description": "Whole-configuration review shared by polling and panel drafts; preserves exact paths and Before/After values.",
+      "html": "<div class=\"ds-changes\"><table><thead><tr><th>Parameter</th><th>Before</th><th>After</th></tr></thead><tbody><tr><th scope=\"row\"><code>/panels/0/name</code></th><td>Panel</td><td>My panel</td></tr></tbody></table></div>",
+      "css": ".ds-changes{max-height:340px;overflow:auto;margin:14px 0;color:var(--text-color,#243029);font:400 12px/1.5 Roboto,sans-serif}.ds-changes table{width:100%;border-collapse:collapse}.ds-changes th,.ds-changes td{text-align:left;vertical-align:top;border-bottom:1px solid var(--border-color,#e0e6df);padding:10px;overflow-wrap:anywhere;min-width:100px}.ds-changes th{font-weight:500}.ds-changes code{background:none;padding:0;color:var(--text-color,#243029);white-space:normal;font-family:SFMono-Regular,Consolas,\"Liberation Mono\",monospace}"
     }
   ],
   "narrative": {
@@ -586,14 +604,17 @@
       "**Do** use semantic theme variables across new and native controls.",
       "**Do** retain visible focus, validation, disabled and connection states.",
       "**Do** keep readings tabular, units subordinate and chart axes readable on mobile.",
-      "**Do** wrap toolbars and stack forms while preserving editor and table usability."
+      "**Do** wrap toolbars and stack forms while preserving editor and table usability.",
+      "**Do** keep draft, review, preview and persisted state explicit beside their actions.",
+      "**Do** show history range, time zone and error-source provenance without requiring an extra disclosure."
     ],
     "donts": [
       "**Don't** replace the WB identity or recolor native SVG content to match the shell.",
       "**Don't** make destructive actions look like ordinary green actions.",
       "**Don't** hardcode light colors where existing semantic theme variables apply.",
       "**Don't** shrink chart labels with the plot or remove native status/error information.",
-      "**Don't** add decorative elevation or motion absent from the implemented system."
+      "**Don't** add decorative elevation or motion absent from the implemented system.",
+      "**Don't** put command controls in the panel preview or imply a failed rule submission was saved."
     ]
   }
 }

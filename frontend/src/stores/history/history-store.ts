@@ -38,12 +38,14 @@ export default class HistoryStore {
   public selectedStartDate: Date | null = null;
   public selectedEndDate: Date | null = null;
   private loadId = 0;
+  private urlControls = new Map<string, UrlControl>();
 
   readonly #dashboardsStore: DashboardsStore;
   readonly #devicesStore: DevicesStore;
   readonly #historyProxy: any;
 
-  constructor(deps: { historyProxy: any; $state: any; dashboardsStore: DashboardsStore; devicesStore: DevicesStore }) {
+  constructor(deps: { historyProxy: any; $state: any; dashboardsStore: DashboardsStore; devicesStore: DevicesStore;
+  }) {
     this.#historyProxy = deps.historyProxy;
     this.$state = deps.$state;
     this.#dashboardsStore = deps.dashboardsStore;
@@ -56,6 +58,17 @@ export default class HistoryStore {
   initialize(id?: string) {
     this.readDatesFromUrl(id);
     this.buildControls(id);
+  }
+
+  resolveControl(id: string): UrlControl {
+    const known = this.controls.find(
+      (item) =>
+        `${item.deviceId}/${item.controlId}${item.widget ? `/${item.widget.id}` : ''}` === id
+    );
+    if (known) return { d: known.deviceId, c: known.controlId, w: known.widget?.id };
+    if (this.urlControls.has(id)) return this.urlControls.get(id);
+    const slash = id.indexOf('/');
+    return { d: id.slice(0, slash), c: id.slice(slash + 1) };
   }
 
   setChartContainerRef(ref: HTMLDivElement | null) {
@@ -86,7 +99,7 @@ export default class HistoryStore {
       if (!id) {
         return;
       }
-      const [deviceId, controlId, widgetId] = id.split('/');
+      const { d: deviceId, c: controlId, w: widgetId } = this.resolveControl(id);
       if (!uniqueCells.has(id)) {
         uniqueCells.add(id);
         controlsForUrl.push({
@@ -102,14 +115,20 @@ export default class HistoryStore {
     const id = encodeControls(
       controlsForUrl,
       startValue ? startValue.getTime() : undefined,
-      endValue ? endValue.getTime() : undefined,
+      endValue ? endValue.getTime() : undefined
     );
 
     const params: Record<string, unknown> = { id };
     if (isFullScreen) {
       params.fullscreen = true;
     }
-    this.$state.go('history.sample', params, { reload: true, inherit: false, notify: true });
+    this.$state.go('history.sample', params, { reload: true, inherit: false, notify: true,
+    });
+  }
+
+  selectControls(controls: string[]) {
+    this.stopLoadingData();
+    this.selectedControls = controls.length ? controls : [null];
   }
 
   setSelectedControlValue(index: number, control: string | null) {
@@ -153,6 +172,7 @@ export default class HistoryStore {
       deviceId: cell.deviceId,
       controlId: cell.controlId,
       valueType: cell.valueType,
+      units: cell.units,
       widget,
     };
   }
@@ -161,27 +181,30 @@ export default class HistoryStore {
     const widgetChannelsMsg = i18n.t('history.labels.widget_channels');
     const allChannelsMsg = i18n.t('history.labels.all_channels');
     const widgetControls = [...this.#dashboardsStore.widgets.values()]
-      .flatMap((widget) => widget.cells
-        .filter((item) => item.id)
-        .map((item) => {
-          try {
-            const cell = this.#devicesStore.cells.get(item.id);
-            const device = this.#devicesStore.devices.get(cell.deviceId);
-            return this.makeChartsControlFromCell(device, cell, widgetChannelsMsg, widget);
-          } catch (error) {
-            const deviceControl = item.id.split('/');
-            return {
-              name: `${widget.name} (${deviceControl[0]} / ${deviceControl[1]})`,
-              group: widgetChannelsMsg,
-              deviceId: deviceControl[0],
-              controlId: deviceControl[1],
-              widget,
-            };
-          }
-        }))
+      .flatMap((widget) =>
+        widget.cells
+          .filter((item) => item.id)
+          .map((item) => {
+            try {
+              const cell = this.#devicesStore.cells.get(item.id);
+              const device = this.#devicesStore.devices.get(cell.deviceId);
+              return this.makeChartsControlFromCell(device, cell, widgetChannelsMsg, widget);
+            } catch (error) {
+              const deviceControl = item.id.split('/');
+              return {
+                name: `${widget.name} (${deviceControl[0]} / ${deviceControl[1]})`,
+                group: widgetChannelsMsg,
+                deviceId: deviceControl[0],
+                controlId: deviceControl[1],
+                widget,
+              };
+            }
+          })
+      )
       .sort((a, b) => a.name.localeCompare(b.name));
 
-    const allControls = Array.from(this.#devicesStore.filteredDevices.keys()).sort()
+    const allControls = Array.from(this.#devicesStore.filteredDevices.keys())
+      .sort()
       .flatMap((deviceId) => {
         const device = this.#devicesStore.devices.get(deviceId);
         return [...device.cells].map((cellId) => {
@@ -191,16 +214,23 @@ export default class HistoryStore {
       });
 
     this.controls = [...widgetControls, ...allControls];
+    this.urlControls.clear();
 
     const selected: string[] = [];
     const controlsFromUrl: UrlControl[] = decode(id).c || [];
 
     if (controlsFromUrl.length) {
       controlsFromUrl.forEach((control) => {
-        const cn = this.controls.find((element) =>
-          element.deviceId === control.d &&
-          element.controlId === control.c &&
-          (element.widget ? element.widget.id === control.w : !control.w));
+        this.urlControls.set(
+          `${control.d}/${control.c}${control.w ? `/${control.w}` : ''}`,
+          control
+        );
+        const cn = this.controls.find(
+          (element) =>
+            element.deviceId === control.d &&
+            element.controlId === control.c &&
+            (element.widget ? element.widget.id === control.w : !control.w)
+        );
         if (cn) {
           let id = `${cn.deviceId}/${cn.controlId}`;
           if (cn.widget) {
@@ -258,7 +288,12 @@ export default class HistoryStore {
 
   makeUpTimeAxisTicks(layout: Partial<PlotlyLayout>) {
     const uptimeChart = this.charts.find((chart) => chart.type === ChartType.UpTime);
-    if (!uptimeChart || !layout.yaxis || uptimeChart.maxValue === undefined || uptimeChart.minValue === undefined) {
+    if (
+      !uptimeChart ||
+      !layout.yaxis ||
+      uptimeChart.maxValue === undefined ||
+      uptimeChart.minValue === undefined
+    ) {
       return;
     }
 
@@ -268,7 +303,8 @@ export default class HistoryStore {
     const hourFraction = 60 * minuteFraction;
     const dayFraction = 24 * hourFraction;
 
-    let range = ((uptimeChart.maxValue as number) - (uptimeChart.minValue as number)) / intervalCount;
+    let range =
+      ((uptimeChart.maxValue as number) - (uptimeChart.minValue as number)) / intervalCount;
     let stepFraction = fiveMinuteFraction;
 
     if (range > dayFraction) {
@@ -332,12 +368,14 @@ export default class HistoryStore {
 
     this.charts.forEach((chart) => {
       if (chart.xValues.length) {
-        minValue = minValue === undefined
-          ? chart.minValue
-          : Math.min(minValue as number, (chart.minValue ?? minValue) as number);
-        maxValue = maxValue === undefined
-          ? chart.maxValue
-          : Math.max(maxValue as number, (chart.maxValue ?? maxValue) as number);
+        minValue =
+          minValue === undefined
+            ? chart.minValue
+            : Math.min(minValue as number, (chart.minValue ?? minValue) as number);
+        maxValue =
+          maxValue === undefined
+            ? chart.maxValue
+            : Math.max(maxValue as number, (chart.maxValue ?? maxValue) as number);
         const axisName = getAxis(chart, layout);
         const color = colors.nextColor();
         config.push(this.createMainChart(chart, color.chartColor, axisName));
@@ -355,7 +393,11 @@ export default class HistoryStore {
       this.makeUpTimeAxisTicks({ ...layout, yaxis: layout.yaxis2 });
     }
 
-    layout.height = 450 + config.length * 19;
+    layout.height =
+      360 +
+      Object.keys(layout).filter((key) => /^yaxis\d*$/.test(key) && layout[key]?.customdata)
+        .length *
+        100;
     return { config, layout };
   }
 
@@ -386,38 +428,40 @@ export default class HistoryStore {
       return map;
     });
 
-    Array.from(dates).sort().forEach((date) => {
-      const isSlowDate = slowDates.has(date);
-      const row: TableRow = {
-        date,
-        value: Array(chartList.length).fill(null),
-        showMs: false,
-      };
+    Array.from(dates)
+      .sort()
+      .forEach((date) => {
+        const isSlowDate = slowDates.has(date);
+        const row: TableRow = {
+          date,
+          value: Array(chartList.length).fill(null),
+          showMs: false,
+        };
 
-      let configIdx = 0;
-      chartList.forEach((ctrl, iCtrl) => {
-        if (!ctrl.xValues.length) {
-          return;
-        }
-        const point = dataMaps[configIdx].get(date);
-        if (point && point.y !== null && point.y !== undefined) {
-          row.value[iCtrl] = ctrl.type === ChartType.UpTime ? point.text : point.y;
-          if (ctrl.type === ChartType.Number || ctrl.type === ChartType.UpTime) {
-            lastKnownValues[iCtrl] = row.value[iCtrl];
+        let configIdx = 0;
+        chartList.forEach((ctrl, iCtrl) => {
+          if (!ctrl.xValues.length) {
+            return;
           }
-          if (ctrl.hasBooleanValues) {
-            row.showMs = true;
+          const point = dataMaps[configIdx].get(date);
+          if (point && point.y !== null && point.y !== undefined) {
+            row.value[iCtrl] = ctrl.type === ChartType.UpTime ? point.text : point.y;
+            if (ctrl.type === ChartType.Number || ctrl.type === ChartType.UpTime) {
+              lastKnownValues[iCtrl] = row.value[iCtrl];
+            }
+            if (ctrl.hasBooleanValues) {
+              row.showMs = true;
+            }
+          } else if (isSlowDate && lastKnownValues[iCtrl] !== null) {
+            row.value[iCtrl] = lastKnownValues[iCtrl];
           }
-        } else if (isSlowDate && lastKnownValues[iCtrl] !== null) {
-          row.value[iCtrl] = lastKnownValues[iCtrl];
-        }
-        configIdx += 1;
-        if (ctrl.hasErrors) {
-          configIdx += 1; // skip error chart in dataMaps for table values
-        }
+          configIdx += 1;
+          if (ctrl.hasErrors) {
+            configIdx += 1; // skip error chart in dataMaps for table values
+          }
+        });
+        graph.push(row);
       });
-      graph.push(row);
-    });
     return graph.filter((row) => row.value.some((v) => v !== null));
   }
 
@@ -483,8 +527,10 @@ export default class HistoryStore {
       chart.yValues.push(seconds);
       chart.xValues.push(ts);
       chart.text.push(record.v);
-      chart.maxValue = chart.maxValue === undefined ? seconds : Math.max(chart.maxValue as number, seconds);
-      chart.minValue = chart.minValue === undefined ? seconds : Math.min(chart.minValue as number, seconds);
+      chart.maxValue =
+        chart.maxValue === undefined ? seconds : Math.max(chart.maxValue as number, seconds);
+      chart.minValue =
+        chart.minValue === undefined ? seconds : Math.min(chart.minValue as number, seconds);
       return;
     }
 
@@ -495,15 +541,25 @@ export default class HistoryStore {
     } else {
       chart.text.push(chart.hasBooleanValues ? String(parseInt(record.v as string, 10)) : record.v);
     }
-    chart.maxErrors.push(record.max ? record.max : record.v);
-    chart.minErrors.push(record.min ? record.min : record.v);
+    chart.maxErrors.push(record.max ?? record.v);
+    chart.minErrors.push(record.min ?? record.v);
     if (chart.type === ChartType.Number) {
-      chart.minValue = chart.minValue === undefined
-        ? record.v
-        : Math.min(chart.minValue as number, record.v as number, (record.min ?? record.v) as number);
-      chart.maxValue = chart.maxValue === undefined
-        ? record.v
-        : Math.max(chart.maxValue as number, record.v as number, (record.max ?? record.v) as number);
+      chart.minValue =
+        chart.minValue === undefined
+          ? record.v
+          : Math.min(
+              chart.minValue as number,
+              record.v as number,
+              (record.min ?? record.v) as number
+            );
+      chart.maxValue =
+        chart.maxValue === undefined
+          ? record.v
+          : Math.max(
+              chart.maxValue as number,
+              record.v as number,
+              (record.max ?? record.v) as number
+            );
     }
   }
 
@@ -512,7 +568,7 @@ export default class HistoryStore {
     indexOfControl: number,
     indexOfChunk: number,
     chunks: string[],
-    loadId: number,
+    loadId: number
   ) {
     if (loadId !== this.loadId || this.stopLoadData) return;
 
@@ -531,13 +587,20 @@ export default class HistoryStore {
     }
   }
 
-  loadHistory(params: any, indexOfControl: number, indexOfChunk: number, chunks: string[], loadId: number) {
+  loadHistory(
+    params: any,
+    indexOfControl: number,
+    indexOfChunk: number,
+    chunks: string[],
+    loadId: number
+  ) {
     if (this.stopLoadData) {
       this.loadPending = false;
       this.disableUi = false;
       return;
     }
-    this.#historyProxy.get_values(params)
+    this.#historyProxy
+      .get_values(params)
       .then((result: LoadHistoryResponse) => {
         runInAction(() => {
           if (loadId !== this.loadId) return;
@@ -548,6 +611,7 @@ export default class HistoryStore {
       })
       .catch(() => {
         runInAction(() => {
+          if (loadId !== this.loadId || this.stopLoadData) return;
           this.loadPending = false;
           this.disableUi = false;
           this.errors = [{ variant: 'danger', text: i18n.t('history.errors.load') }];
@@ -555,7 +619,12 @@ export default class HistoryStore {
       });
   }
 
-  loadChunkedHistory(indexOfControl: number, indexOfChunk: number, chunks: string[], loadId: number) {
+  loadChunkedHistory(
+    indexOfControl: number,
+    indexOfChunk: number,
+    chunks: string[],
+    loadId: number
+  ) {
     if (loadId !== this.loadId) return;
 
     const control = this.selectedControls[indexOfControl];
@@ -563,7 +632,7 @@ export default class HistoryStore {
       return;
     }
 
-    const [deviceId, controlId] = control.split('/');
+    const { d: deviceId, c: controlId } = this.resolveControl(control);
     const params: Record<string, any> = {
       channels: [[deviceId, controlId]],
       limit: HISTORY_MAX_POINTS,
@@ -579,7 +648,10 @@ export default class HistoryStore {
     const intervalMs = end.getTime() - start.getTime();
     params.min_interval = Math.trunc((intervalMs / params.limit) * 1.1);
     params.max_records = this.chartContainer
-      ? Math.min(HISTORY_MAX_POINTS, Math.ceil(this.chartContainer.offsetWidth / (chunks.length - 1)))
+      ? Math.min(
+          HISTORY_MAX_POINTS,
+          Math.ceil(this.chartContainer.offsetWidth / (chunks.length - 1))
+        )
       : HISTORY_MAX_POINTS;
     params.with_milliseconds = true;
 
@@ -600,7 +672,8 @@ export default class HistoryStore {
       return;
     }
     const chunkInterval = 1;
-    const parts = chunks || splitDate(this.selectedStartDate, this.selectedEndDate, chunkInterval + 1);
+    const parts =
+      chunks || splitDate(this.selectedStartDate, this.selectedEndDate, chunkInterval + 1);
     this.chunksN = parts.length - 1;
     this.loadChunkedHistory(indexOfControl, 0, parts, loadId);
   }
@@ -614,14 +687,18 @@ export default class HistoryStore {
     this.loadPending = true;
     this.disableUi = true;
     this.charts = controlsToLoad.map((control) => {
-      const [deviceId, controlId, widgetId] = control.split('/');
-      const chartControl = this.controls.find((item) => {
-        if (widgetId) {
-          return item.controlId === controlId && item.deviceId === deviceId && item.widget.id === widgetId;
-        } else {
-          return item.controlId === controlId && item.deviceId === deviceId;
-        }
-      });
+      const { d: deviceId, c: controlId, w: widgetId } = this.resolveControl(control);
+      const chartControl = this.controls.find(
+        (item) =>
+          item.controlId === controlId &&
+          item.deviceId === deviceId &&
+          (widgetId ? item.widget?.id === widgetId : !item.widget)
+      ) || {
+        name: `${deviceId} / ${controlId}`,
+        deviceId,
+        controlId,
+        group: '',
+      };
       return new ChartTraits(chartControl);
     });
     this.chartConfig = [];

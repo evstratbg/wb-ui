@@ -1,8 +1,9 @@
 import ReactDOM from 'react-dom/client';
 import { Navigation } from '@/components/navigation';
 import { setReactLocale } from '~/react-directives/locale';
+import { uiStore } from '@/stores/ui';
 
-export default function navigationDirective($rootScope) {
+export default function navigationDirective($rootScope, $state) {
   'ngInject';
   setReactLocale();
 
@@ -15,6 +16,11 @@ export default function navigationDirective($rootScope) {
         <Navigation
           toggleConsole={$rootScope.toggleConsole}
           dashboardsStore={$rootScope.dashboardsStore}
+          changeWorkspace={(mode) =>
+            $state
+              .go(mode === 'home' ? 'living' : 'overview', {}, { inherit: false })
+              .then(() => uiStore.setWorkspaceMode(mode))
+          }
         />
       );
 
